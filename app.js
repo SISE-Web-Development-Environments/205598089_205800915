@@ -10,16 +10,16 @@ var interval;
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
-	Welcome();
+
 
 });
 
-function Welcome() {
+$(function(){
 	$('.game').hide();
-	$('.welcome p,.game p').click(function(){
-		$('.welcome,.game').toggle();
+	$('.welcome, .game').on('click',function(){
+		$('.welcome, .game').toggle();
 	});
-}
+});
 
 function Start() {
 	board = new Array();
