@@ -14,10 +14,53 @@ $(document).ready(function() {
 
 });
 
-$(function(){
-	$('.game').hide();
-	$('.welcome, .game').on('click',function(){
-		$('.welcome, .game').toggle();
+$(function() {
+	// Initialize form validation on the registration form.
+	// It has the name attribute "registration"
+	$("form[name='registration']").validate({
+		// Specify validation rules
+		rules: {
+			// The key name on the left side is the name attribute
+			// of an input field. Validation rules are defined
+			// on the right side
+			user: {
+				required:true,
+			},
+			name: {
+				required:true,
+				number:false
+			},
+			mail: {
+				required: true,
+				// Specify that email should be validated
+				// by the built-in "email" rule
+				mail: true
+			},
+			pass: {
+				required: true,
+				minlength: 6,
+				number:true
+			},
+			bday:{
+				required:true
+			}
+		},
+		// Specify validation error messages
+		messages: {
+			name: "Please enter your name",
+			user: "Please enter a user name",
+			pass: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 6 characters long"
+			},
+			mail: "Please enter a valid email address",
+			bday:"Please enter a valid date"
+		},
+		// Make sure the form is submitted to the destination defined
+		// in the "action" attribute of the form when valid
+		submitHandler: function(form) {
+			form.submit();
+		}
 	});
 });
 
