@@ -10,7 +10,16 @@ var interval;
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
+	Welcome();
+
 });
+
+function Welcome() {
+	$('.game').hide();
+	$('.welcome p,.game p').click(function(){
+		$('.welcome,.game').toggle();
+	});
+}
 
 function Start() {
 	board = new Array();
@@ -170,3 +179,4 @@ function UpdatePosition() {
 		Draw();
 	}
 }
+
