@@ -11,7 +11,6 @@ $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
 
-
 });
 
 $(function() {
