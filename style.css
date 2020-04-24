@@ -8,17 +8,10 @@
     width: 15%;
     height: 9px;
 }
-#menu {
-
-    top: 0;
-    width: 50%;
-    left:100px;
+.menu {
+    font-size: 40px;
+    font-color:black;
     height: 100px;
-    background: #090adf;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    background: #dfa036;
     text-align: center;
-
-    z-index: 99;
 }
