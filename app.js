@@ -7,6 +7,11 @@ var start_time;
 var time_elapsed;
 var interval;
 var welcome;
+var menu;
+var register;
+var login;
+var registrationButton;
+var loginButton;
 //hello aviel
 
 $(document).ready(function() {
@@ -18,6 +23,7 @@ $(document).ready(function() {
 	welcome=document.getElementById("welcome");
 	welcome.style.display='block';
 });
+
 
 
 
@@ -73,9 +79,23 @@ $(function() {
 
 function hideAllDivs() {
 	var divs = document.getElementsByTagName("div");
+	menu=document.getElementById("menu");
 	for (var i = 0; i < divs.length; i++) {
 		divs[i].style.display = 'none';
 	}
+	menu.style.display='block';
+}
+
+function showRegistration(){
+	hideAllDivs();
+	register=document.getElementById("register");
+	register.style.display='block';
+}
+
+function showLogin(){
+	hideAllDivs();
+	login=document.getElementById("login");
+	login.style.display='block';
 }
 
 function addUser() {

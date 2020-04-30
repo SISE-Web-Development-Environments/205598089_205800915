@@ -14,8 +14,8 @@
 
 <div id="menu" class="menu">
 	<a href="#welcome">Welcome</a>-
-	<a href="#register">Register </a>-
-	<a href="#login">Login</a>-
+	<a href="javascript:showRegistration()">Register </a>-
+	<a href="javascript:showLogin()">Login</a>-
 	<a id="aboutOpen" href="javascript:aboutOpen()">About</a>
 </div>
 <br/>
@@ -29,8 +29,8 @@
 <br/>
 <br/>
 <div id="welcome">
-	<button>Register</button>
-	<button>Login</button>
+	<button id="registrationButton" onclick="showRegistration()">Register</button>
+	<button id="loginButton" onclick="showLogin()">Login</button>
 	<br><br>
 	<br><br>
 	<br><br>
