@@ -6,19 +6,17 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-var localStorage;
-var welcome=document.getElementById("welcome")
+var welcome;
 //hello aviel
 
 $(document).ready(function() {
-	Start();
 	context = canvas.getContext("2d");
+	Start();
 	localStorage.setItem('p','p');
 	localStorage.setItem("aviel","avitaf");
-
 	hideAllDivs();
-	//welcome.style.display="block"
-	Start();
+	welcome=document.getElementById("welcome");
+	welcome.style.display='block';
 });
 
 
@@ -74,10 +72,17 @@ $(function() {
 
 
 function hideAllDivs() {
-	var divs=document.getElementsByTagName("div");
-
+	var divs = document.getElementsByTagName("div");
+	for (var i = 0; i < divs.length; i++) {
+		divs[i].style.display = 'none';
+	}
 }
 
+function addUser() {
+	let user=document.getElementById("user");
+	let pass=document.getElementById("pass");
+	localStorage.setItem(user.value,pass.value);
+}
 
 // Loginnnnnnnnnnnnn
 function UserAndPassConfirm(){
