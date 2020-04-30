@@ -6,9 +6,11 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var localStorage;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
+	localStorage.setItem('p','p');
 	Start();
 });
 
@@ -56,11 +58,15 @@ $(function() {
 		},
 		// Make sure the form is submitted to the destination defined
 		// in the "action" attribute of the form when valid
-		submitHandler: function(form) {
-			form.submit();
-		}
 	});
 });
+
+$('#register').submit(function() {
+	// Get all the forms elements and their values in one step
+	var values = $(this).serialize();
+	localStorage.setItem(values[user],values[pass]);
+});
+
 
 function Start() {
 	board = new Array();
