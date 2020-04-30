@@ -11,9 +11,11 @@ var welcome=document.getElementById("welcome")
 //hello aviel
 
 $(document).ready(function() {
+	Start();
 	context = canvas.getContext("2d");
 	localStorage.setItem('p','p');
 	localStorage.setItem("aviel","avitaf");
+
 	hideAllDivs();
 	//welcome.style.display="block"
 	Start();
