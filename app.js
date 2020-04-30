@@ -68,9 +68,15 @@ function UserAndPassConfirm(){
 		if(localStorage.getItem(txtbox1.value)==txtbox2.value){
 			//the user and password correct
 			$(document).ready(function(){
-					$("plogin").append(" <b>"+txtbox1.value+" Welcome , you have login succecsfully</b>.");
+				alert(txtbox1.value+" Welcome , you have login succecsfully");
+				//$("plogin").append(" <b>"+txtbox1.value+" Welcome , you have login succecsfully</b>.");
 				});
 		}
+		else{
+			alert(txtbox1.value+" Welcome , your Password is incorrect");
+		}
+	}else {
+		alert(" Welcome , your UserName is incorrect");
 	}
 }
 
