@@ -6,6 +6,9 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var localStorage;
+var modal=document.getElementById("about");
+var span = document.getElementsByClassName("close")[0];
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -86,6 +89,20 @@ $('#register').submit(function() {
 	var values = $(this).serialize();
 	localStorage.setItem(values[user],values[pass]);
 });
+
+span.onclick=function () {
+	modal.style.display="none";
+}
+
+window.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
+}
+
+function aboutOpen() {
+	modal.style.display="block";
+}
 
 
 function Start() {
