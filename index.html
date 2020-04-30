@@ -59,21 +59,36 @@
 <br/>
 <br/>
 <br/>
+<!--
 <form class="cmxform" id="signupForm" method="get" action="" novalidate="novalidate">
 	<fieldset>
 		<legend>Login</legend>
 		<p>
 			<label for="username">Username</label>
 			<input id="username" name="username" type="text" aria-required="true" class="error">
-			<label id="username-error" class="error" for="username">Please enter a username</label>
+			<label id="username-error" class="error" for="username">(Please enter a username)</label>
 		</p>
 		<p>
 			<label for="password">Password</label>
 			<input id="password" name="password" type="password" aria-required="true" class="error">
-			<label id="password-error" class="error" for="password">Please provide a password</label>
+			<label id="password-error" class="error" for="password">(Please provide a password)</label>
 		</p>
-		</fieldset>
+
+	<p>
+	<input class="submit" type="submit" value="Submit">
+	</p>
+	</fieldset>
 	</form>
+	-->
+<login>
+User-Name : <input type="text" id="txtbox1"/>
+<br><br>
+Password : <input type="text" id="txtbox2"/>
+<input type=button onclick="UserAndPassConfirm()" value="Login">
+	<plogin>
+
+	</plogin>
+</login>
 </div>
 <br/>
 <br/>
@@ -95,7 +110,6 @@
 	<div id="game">
 		<canvas id="canvas" height="600" width="600"></canvas>
 	</div>
-	<div/>
-	<div/>
-	<body/>
+	</div>
+	</body>
 </html>
