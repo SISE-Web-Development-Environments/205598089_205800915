@@ -6,23 +6,8 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-var User array[];
-class User{
-	var UserName;
-	var Password;
-	var Email;
-	var Birthday;
-	var FullName;
 
-	constructor(UserName,Password,FullName,Email,Birthday) {
-		this.UserName=UserName;
-		this.Birthday=Birthday;
-		this.Email=Email;
-		this.FullName=FullName;
-		this.Password=Password;
-	}
 
-}
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
