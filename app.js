@@ -7,8 +7,7 @@ var start_time;
 var time_elapsed;
 var interval;
 var localStorage;
-var modal=document.getElementById("about");
-var span = document.getElementsByClassName("close")[0];
+
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -84,25 +83,10 @@ function UserAndPassConfirm(){
 	}
 }
 
-
-$('#register').submit(function() {
-	// Get all the forms elements and their values in one step
-	var values = $(this).serialize();
-	localStorage.setItem(values[user],values[pass]);
-});
-
-span.onclick=function () {
-	modal.style.display="none";
-}
-
-window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-}
-
-function aboutOpen() {
-	modal.style.display="block";
+function addUser() {
+	var user = document.getElementById("user").value;
+	var pass = document.getElementById("pass").value;
+	localStorage.setItem(user,pass)
 }
 
 
