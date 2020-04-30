@@ -13,10 +13,10 @@
 </picture>
 
 <div id="menu" class="menu">
-	<a href="#welcome">Welcome</a>-
+	<a href="javascript:showWelcome()">Welcome</a>-
 	<a href="javascript:showRegistration()">Register </a>-
 	<a href="javascript:showLogin()">Login</a>-
-	<a id="aboutOpen" href="javascript:aboutOpen()">About</a>
+	<a id="aboutOpen" href="javascript:showAbout">About</a>
 </div>
 <br/>
 <br/>
@@ -36,7 +36,7 @@
 	<br><br>
 </div>
 <div id="register">
-	<form name="registration" onsubmit="addUser()">
+	<form id="regForm" name="registration" onsubmit="addUser()">
 		<label for="user">User Name:</label>
 		<input type="text" id="user" name="user"><br><br>
 		<label for="pass">Password:</label>
@@ -162,11 +162,7 @@
 <br/>
 <br/>
 <br/>
-<div id="about" class="modal">
-	<dialog id="modal">
-		<p>text</p>
-	</dialog>
-</div>
+
 <br/>
 <br/>
 <div id="score">

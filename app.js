@@ -10,18 +10,16 @@ var welcome;
 var menu;
 var register;
 var login;
-var registrationButton;
-var loginButton;
+var modal;
+var btn;
+var span;
 //hello aviel
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
+	showWelcome();
 	localStorage.setItem('p','p');
-	localStorage.setItem("aviel","avitaf");
-	hideAllDivs();
-	welcome=document.getElementById("welcome");
-	welcome.style.display='block';
 });
 
 
@@ -101,11 +99,32 @@ function showLogin(){
 	login.style.display='block';
 }
 
-function addUser() {
-	let user=document.getElementById("user");
-	let pass=document.getElementById("pass");
-	localStorage.setItem(user.value,pass.value);
+function showWelcome(){
+	hideAllDivs();
+	welcome=document.getElementById("welcome");
+	welcome.style.display='block';
 }
+
+function showAbout() {
+	modal=document.getElementById("modal");
+	modal.style.display='block'
+	modal.showModal();
+}
+
+window.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
+}
+
+function addUser() {
+	if($("#regForm").valid()) {
+		let user = document.getElementById("user");
+		let pass = document.getElementById("pass");
+		localStorage.setItem(user.value, pass.value);
+	}
+}
+
 
 // Loginnnnnnnnnnnnn
 function UserAndPassConfirm(){
@@ -289,4 +308,6 @@ function UpdatePosition() {
 		Draw();
 	}
 }
+
+
 
