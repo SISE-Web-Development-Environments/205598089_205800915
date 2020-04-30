@@ -7,6 +7,7 @@ var start_time;
 var time_elapsed;
 var interval;
 var localStorage;
+var modal=document.getElementById("modal")
 
 
 $(document).ready(function() {
@@ -16,9 +17,14 @@ $(document).ready(function() {
 	Start();
 });
 
+
+
+
+
 $(function() {
 	// Initialize form validation on the registration form.
 	// It has the name attribute "registration"
+
 	$("form[name='registration']").validate({
 		// Specify validation rules
 		rules: {
@@ -30,13 +36,12 @@ $(function() {
 			},
 			name: {
 				required:true,
-				number:false
 			},
 			mail: {
 				required: true,
 				// Specify that email should be validated
 				// by the built-in "email" rule
-				mail: true
+				email: true,
 			},
 			pass: {
 				required: true,
@@ -63,6 +68,12 @@ $(function() {
 
 	});
 });
+
+function aboutOpen() {
+	modal.style.display="block";
+}
+
+
 // Loginnnnnnnnnnnnn
 function UserAndPassConfirm(){
 	var txtbox1=document.getElementById("txtbox1");
