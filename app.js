@@ -19,7 +19,7 @@ $(document).ready(function() {
 	Start();
 	localStorage.setItem('p','p');
 	localStorage.setItem("aviel","avitaf");
-	//hideAllDivs();
+	hideAllDivs();
 	welcome=document.getElementById("welcome");
 	welcome.style.display='block';
 });
