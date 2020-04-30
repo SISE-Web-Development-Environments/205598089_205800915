@@ -14,7 +14,7 @@ $(document).ready(function() {
 	Start();
 	localStorage.setItem('p','p');
 	localStorage.setItem("aviel","avitaf");
-	hideAllDivs();
+	//hideAllDivs();
 	welcome=document.getElementById("welcome");
 	welcome.style.display='block';
 });
@@ -68,6 +68,9 @@ $(function() {
 		// in the "action" attribute of the form when valid
 
 	});
+	$("form[name='registration']").validate({
+	});
+
 });
 
 
@@ -104,7 +107,7 @@ function UserAndPassConfirm(){
 		alert(" Welcome , your UserName is incorrect");
 	}
 }
-/////// colors picker
+
 
 
 

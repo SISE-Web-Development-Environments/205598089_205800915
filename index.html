@@ -79,7 +79,7 @@
 	<br/>
 </div>
 <div id="settings">
-	<setting id="Setting" >
+	<form name="settings" onsubmit="">
 		<fieldset>
 			<legend>Settings</legend>
 			<strong>information about aviel and ron </strong>
@@ -100,33 +100,20 @@
 				<br><br>
 			</p>
 
+
 			<p>
 				<label id="Balls Color"><b>Choose colors for the balls  </b></label>
-				<b> 60 % , 5 points ball: </b>
 				<br><br>
-				<meta charset="utf-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1">
-				<title>jQuery UI Slider - Colorpicker</title>
-				<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-				<link rel="stylesheet" href="/resources/demos/style.css">
-				<span class="ui-icon ui-icon-pencil" style="float:left; margin:-2px 5px 0 0;"></span>
-				Simple Colorpicker
-			</p>
-			<div id="red"></div>
-			<div id="green"></div>
-			<div id="blue"></div>
-			<div id="swatch" class="ui-widget-content ui-corner-all"></div>
+				<label for="firstcolor" >60 % , 5 points ball: </label>
+				<input id="firstcolor" name="firstcolor" type="color" >
+				<br><br>
+			<label for="secondcolor" >30 % , 15 points ball:  </label>
+			<input id="secondcolor" name="secondcolor" type="color" >
 			<br><br>
-			<br><br>
-			<br><br>
-			<br><br>
-			<br><br>
+				<label for="thirdcolor" >10 % , 25 points ball:  </label>
+				<input id="thirdcolor" name="thirdcolor" type="color" >
 			<br><br>
 
-			<br><br>
-			30 % , 15 points ball:<input id="color" name="color" type="text" aria-required="true" class="error">
-			<br><br>
-			10 % , 25 points ball:
 			<br><br>
 			</p>
 			<p>
@@ -154,7 +141,8 @@
 				<input class="submit" type="submit" value="Update">
 			</p>
 		</fieldset>
-	</setting>
+	</form>
+
 </div>
 
 <br/>
