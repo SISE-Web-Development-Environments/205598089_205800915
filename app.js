@@ -71,10 +71,6 @@ $(function() {
 	});
 });
 
-function aboutOpen() {
-	modal.style.display="block";
-}
-
 
 function hideAllDivs() {
 	let divs = document.getElementsByTagName("div");​
