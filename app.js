@@ -9,7 +9,7 @@ var interval;
 var localStorage;
 var modal=document.getElementById("modal")
 var welcome=document.getElementById("welcome")
-
+//hello aviel
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -64,6 +64,7 @@ $(function() {
 			mail: "Please enter a valid email address",
 			bday:"Please enter a valid date "
 		},
+
 		// Make sure the form is submitted to the destination defined
 		// in the "action" attribute of the form when valid
 
