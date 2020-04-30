@@ -38,7 +38,7 @@
 	<br><br>
 </div>
 <div id="register">
-	<form name="registration" action="#" onsubmit="addUser()">
+	<form>
 		<label for="user">User Name:</label>
 		<input type="text" id="user" name="user"><br><br>
 		<label for="pass">Password:</label>
@@ -119,11 +119,11 @@ Password : <input type="text" id="txtbox2"/>
 		<div id="swatch" class="ui-widget-content ui-corner-all"></div>
 
 		<br><br>
-			60 % , 5 points ball:
+			60 % , 5 points ball: <input id="right" name="right" type="text" aria-required="true" class="error">
 			<br><br>
-			30 % , 15 points ball:
+			30 % , 15 points ball: <input id="left" name="left" type="text" aria-required="true" class="error">
 			<br><br>
-			10 % , 25 points ball:
+			10 % , 25 points ball:  <input id="down" name="down" type="text" aria-required="true" class="error">
 			<br><br>
 		</p>
 		<p>
@@ -177,7 +177,5 @@ Password : <input type="text" id="txtbox2"/>
 		<canvas id="canvas" height="600" width="600"></canvas>
 	</div>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	</body>
 </html>
