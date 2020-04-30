@@ -10,6 +10,18 @@ var welcome;
 var menu;
 var register;
 var login;
+var registrationButton;
+var loginButton;
+var up;
+var lleft;
+var right;
+var down;
+var firstcolor;
+var secondcolor;
+var thirdcolor;
+var balls;
+var tme;
+var monsters;
 var modal;
 var btn;
 var span;
@@ -18,8 +30,12 @@ var span;
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
-	showWelcome();
+	//showWelcome();
 	localStorage.setItem('p','p');
+	localStorage.setItem("aviel","avitaf");
+	//hideAllDivs();
+	welcome=document.getElementById("welcome");
+	welcome.style.display='block';
 });
 
 
@@ -72,10 +88,75 @@ $(function() {
 		// in the "action" attribute of the form when valid
 
 	});
-	$("form[name='registration']").validate({
+	$("form[name='settings']").validate({
+		rules: {
+			// The key name on the left side is the name attribute
+			// of an input field. Validation rules are defined
+			// on the right side
+			right: {
+				required:true,
+			},
+			left: {
+				required:true,
+			},
+			up: {
+				required: true,
+			},
+			down: {
+				required: true,
+			},
+			firstcolor:{
+				required:true
+			},
+			secondcolor:{
+				required:true
+			},
+			thirdcolor:{
+				required:true
+			},
+			Balls:{
+				required:true,
+				BallsNumberConstarint:true
+			},
+			tme:{
+				required:true,
+				TimeConstratint:true
+			},
+			Mons:{
+				required:true,
+				MonstConstraint:true
+			}
+		},
+		// Specify validation error messages
+		messages: {
+			right: "Please enter Value",
+			left: "Please enter Value",
+			up: "Please enter Value",
+			down: "Please enter Value",
+			firstcolor: "Please enter a Value",
+			secondcolor: "Please enter a Value",
+			thirdcolor: "Please enter a Value",
+			Balls: "Please enter a user name (Minmium :50 , Max:90)",
+			tme: "Please enter a valid number (Minmum :60 secs)",
+			Mons:"Please enter a valid number in the range of (Minmium :1 , Max:4)"
+		},
+
+		// Make sure the form is submitted to the destination defined
+		// in the "action" attribute of the form when valid
+
+	});
+	$.validator.addMethod("BallsNumberConstarint",function(value){
+		return(value<=90 && value>=50);
+	});
+	$.validator.addMethod("TimeConstratint",function(value){
+		return(value>=60 );
+	});
+	$.validator.addMethod("MonstConstraint",function(value){
+		return(value>=1 && value<=4 );
 	});
 
 });
+
 
 
 function hideAllDivs() {
@@ -122,6 +203,21 @@ function addUser() {
 		let user = document.getElementById("user");
 		let pass = document.getElementById("pass");
 		localStorage.setItem(user.value, pass.value);
+	}
+}
+function UploadSetting(){
+	if($("#settings").valid()) {
+		leftt = document.getElementById("left").value;
+		up = document.getElementById("up").value;
+		right = document.getElementById("right").value;
+		down = document.getElementById("down").value;
+		firstcolor = document.getElementById("firstcolor").value;
+		secondcolor = document.getElementById("secondcolor").value;
+		thirdcolor = document.getElementById("thirdcolor").value;
+		tme = document.getElementById("tme").value;
+		monsters = document.getElementById("Mons").value;
+		balls = document.getElementById("Balls").value;
+		alert("The summary of settings is " + "left :" + leftt + " moves.... " + "monsters: " + monsters);
 	}
 }
 

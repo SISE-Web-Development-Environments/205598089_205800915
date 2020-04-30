@@ -78,8 +78,8 @@
 	<br/>
 	<br/>
 </div>
-<div id="settings">
-	<setting id="Setting" >
+<div id="setting">
+	<form name="settings"  id="settings"onsubmit="UploadSetting()">
 		<fieldset>
 			<legend>Settings</legend>
 			<strong>information about aviel and ron </strong>
@@ -100,50 +100,36 @@
 				<br><br>
 			</p>
 
+
 			<p>
 				<label id="Balls Color"><b>Choose colors for the balls  </b></label>
-				<b> 60 % , 5 points ball: </b>
 				<br><br>
-				<meta charset="utf-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1">
-				<title>jQuery UI Slider - Colorpicker</title>
-				<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-				<link rel="stylesheet" href="/resources/demos/style.css">
-				<span class="ui-icon ui-icon-pencil" style="float:left; margin:-2px 5px 0 0;"></span>
-				Simple Colorpicker
-			</p>
-			<div id="red"></div>
-			<div id="green"></div>
-			<div id="blue"></div>
-			<div id="swatch" class="ui-widget-content ui-corner-all"></div>
+				<label for="firstcolor" >60 % , 5 points ball: </label>
+				<input id="firstcolor" name="firstcolor" type="color" >
+				<br><br>
+			<label for="secondcolor" >30 % , 15 points ball:  </label>
+			<input id="secondcolor" name="secondcolor" type="color" >
 			<br><br>
+				<label for="thirdcolor" >10 % , 25 points ball:  </label>
+				<input id="thirdcolor" name="thirdcolor" type="color" >
 			<br><br>
-			<br><br>
-			<br><br>
-			<br><br>
-			<br><br>
-
-			<br><br>
-			30 % , 15 points ball:<input id="color" name="color" type="text" aria-required="true" class="error">
-			<br><br>
-			10 % , 25 points ball:
 			<br><br>
 			</p>
 			<p>
 				<label id="BallsinGame"><b>Number of balls in a game </b></label>
 				<br><br>
-				Balls Number : <input id="Balls" name="Balls" type="integer" aria-required="true" class="error">(Minmium :50 , Max:90)
+				Balls Number : <input id="Balls" name="Balls" type="integer" aria-required="true" class="error">
 			</p>
 			<p>
 				<label id="SetTime" ><b>Set Time for the Game</b> </label>
 				<br><br>
-				Balls Number : <input id="tme" name="tme" type="integer" aria-required="true" class="error"> (Minmum :60 secs)
+				Set the time : <input id="tme" name="tme" type="integer" aria-required="true" class="error">
 				<br><br>
 			</p>
 			<p>
 				<label id="Monsters Numbers"><b>Set Numbers of Monsters</b>  </label>
 				<br><br>
-				Monsters Numbers : <input id="Mons" name="Mons" type="integer" aria-required="true" class="error"> (Minmium :1 , Max:4)
+				Monsters Numbers : <input id="Mons" name="Mons" type="integer" aria-required="true" class="error">
 				<br><br>
 			</p>
 			<label id="RandomSetting"> RandomSetting </label>
@@ -154,7 +140,8 @@
 				<input class="submit" type="submit" value="Update">
 			</p>
 		</fieldset>
-	</setting>
+	</form>
+
 </div>
 
 <br/>
