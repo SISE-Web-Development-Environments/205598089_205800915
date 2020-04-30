@@ -8,16 +8,17 @@ var time_elapsed;
 var interval;
 var localStorage;
 var modal=document.getElementById("modal")
+var welcome=document.getElementById("welcome")
 
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	localStorage.setItem('p','p');
 	localStorage.setItem("aviel","avitaf");
+	hideAllDivs()
+	welcome.style.display="block"
 	Start();
 });
-
-
 
 
 
@@ -71,6 +72,14 @@ $(function() {
 
 function aboutOpen() {
 	modal.style.display="block";
+}
+
+
+function hideAllDivs() {
+	let divs = document.getElementsByTagName("div");​
+	for (let i = 0; i < divs.length; i++) {
+	divs[i].style.display = 'none';
+}
 }
 
 
