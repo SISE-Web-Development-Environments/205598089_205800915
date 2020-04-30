@@ -16,6 +16,7 @@
     text-align: center;
 }
 
+er-handle { border-color: #729fcf; }
 #red, #green, #blue {
     float: left;
     clear: left;
