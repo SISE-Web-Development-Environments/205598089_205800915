@@ -6,11 +6,11 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-var localStorage;
-var begin=true;
+
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	localStorage.setItem('p','p');
+	localStorage.setItem("aviel","avitaf");
 	Start();
 });
 
@@ -61,10 +61,6 @@ $(function() {
 	});
 });
 function UserAndPassConfirm(){
-	if(begin==true) {
-		CreatingP();
-		this.begin=false;
-	}
 	var txtbox1=document.getElementById("txtbox1");
 	var txtbox2=document.getElementById("txtbox2");
 	if(localStorage.getItem(txtbox1.value)!=null){
@@ -77,10 +73,7 @@ function UserAndPassConfirm(){
 		}
 	}
 }
-function CreatingP(){
-	localStorage.setItem("p","p");
-	localStorage.setItem("aviel","avitaf");
-}
+
 
 $('#register').submit(function() {
 	// Get all the forms elements and their values in one step
