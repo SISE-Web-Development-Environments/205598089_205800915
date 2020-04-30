@@ -56,7 +56,7 @@ $(function() {
 				minlength: "Your password must be at least 6 characters long"
 			},
 			mail: "Please enter a valid email address",
-			bday:"Please enter a valid date"
+			bday:"Please enter a valid date "
 		},
 		// Make sure the form is submitted to the destination defined
 		// in the "action" attribute of the form when valid
