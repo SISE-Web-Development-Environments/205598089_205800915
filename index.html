@@ -80,6 +80,8 @@ Password : <input type="text" id="txtbox2"/>
 </div>
 <div id="settings">
 <setting id="Setting" >
+<div id="setting">
+<form name="Setting" onsubmit="">
 	<fieldset>
 		<legend>Settings</legend>
 		<strong>information about aviel and ron </strong>
@@ -88,7 +90,6 @@ Password : <input type="text" id="txtbox2"/>
 		<br><br>
 		<p>
 			<label id="moveButtons"><b>Moves Buttons </b></label>
-
 			<br><br>
 			Right : <input id="right" name="right" type="text" aria-required="true" class="error">
 			<br><br>
@@ -99,40 +100,16 @@ Password : <input type="text" id="txtbox2"/>
 			UP : <input id="up" name="up" type="text" aria-required="true" class="error">
 			<br><br>
 		</p>
-
 		<p>
 			<label id="Balls Color"><b>Choose colors for the balls  </b></label>
 			<b> 60 % , 5 points ball: </b>
 			<br><br>
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<title>jQuery UI Slider - Colorpicker</title>
-			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-			<link rel="stylesheet" href="/resources/demos/style.css">
-			<span class="ui-icon ui-icon-pencil" style="float:left; margin:-2px 5px 0 0;"></span>
-			Simple Colorpicker
 		</p>
-		<div id="red"></div>
-		<div id="green"></div>
-		<div id="blue"></div>
-		<div id="swatch" class="ui-widget-content ui-corner-all"></div>
 			<br><br>
+			30 % , 15 points ball:<input id="color" name="color" type="colot" >
 			<br><br>
+			10 % , 25 points ball:<input
 			<br><br>
-			<br><br>
-			<br><br>
-			<br><br>
-
-			<br><br>
-			30 % , 15 points ball:<input id="color" name="color" type="text" aria-required="true" class="error">
-			<br><br>
-			10 % , 25 points ball:
-			<br><br>
-		</p>
-		<p>
-			<label id="BallsinGame"><b>Number of balls in a game </b></label>
-			<br><br>
-			Balls Number : <input id="Balls" name="Balls" type="integer" aria-required="true" class="error">(Minmium :50 , Max:90)
 		</p>
 		<p>
 			<label id="SetTime" ><b>Set Time for the Game</b> </label>

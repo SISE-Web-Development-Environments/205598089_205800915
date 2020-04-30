@@ -95,7 +95,7 @@ function UserAndPassConfirm(){
 			$(document).ready(function(){
 				alert(txtbox1.value+" Welcome , you have login succecsfully");
 				//$("plogin").append(" <b>"+txtbox1.value+" Welcome , you have login succecsfully</b>.");
-				});
+			});
 		}
 		else{
 			alert(txtbox1.value+" Welcome , your Password is incorrect");
