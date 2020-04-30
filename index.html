@@ -32,7 +32,10 @@
 <br/>
 <div id="welcome">
 	<button>Register</button>
-	<button>Register</button>
+	<button>Login</button>
+	<br><br>
+	<br><br>
+	<br><br>
 </div>
 <div id="register">
 	<form>
@@ -60,25 +63,6 @@
 <br/>
 <br/>
 <!--
-<form class="cmxform" id="signupForm" method="get" action="" novalidate="novalidate">
-	<fieldset>
-		<legend>Login</legend>
-		<p>
-			<label for="username">Username</label>
-			<input id="username" name="username" type="text" aria-required="true" class="error">
-			<label id="username-error" class="error" for="username">(Please enter a username)</label>
-		</p>
-		<p>
-			<label for="password">Password</label>
-			<input id="password" name="password" type="password" aria-required="true" class="error">
-			<label id="password-error" class="error" for="password">(Please provide a password)</label>
-		</p>
-
-	<p>
-	<input class="submit" type="submit" value="Submit">
-	</p>
-	</fieldset>
-	</form>
 	-->
 <login>
 User-Name : <input type="text" id="txtbox1"/>
@@ -95,6 +79,39 @@ Password : <input type="text" id="txtbox2"/>
 <br/>
 <br/>
 <br/>
+<setting id="Setting" >
+	<fieldset>
+		<legend>Settings</legend>
+		<strong>information about aviel and ron </strong>
+		<p>
+			<label id="moveButtons">Moves Buttons</label>
+			<br><br>
+			Right : <input id="right" name="right" type="text" aria-required="true" class="error">
+			<br><br>
+			Left : <input id="left" name="left" type="text" aria-required="true" class="error">
+			<br><br>
+			Down : <input id="down" name="down" type="text" aria-required="true" class="error">
+			<br><br>
+			UP : <input id="up" name="up" type="text" aria-required="true" class="error">
+			<br><br>
+		</p>
+		<p>
+			<label id="BallsinGame">Number of balls in a game</label>
+			<br><br>
+			Balls Number : <input id="Balls" name="Balls" type="integer" aria-required="true" class="error">
+		</p>
+		<p>
+			<label id="SetTime">Set Time for the Game </label>
+			<br><br>
+			Balls Number : <input id="tme" name="tme" type="integer" aria-required="true" class="error"> (Minmum :60 secs)
+			<br><br>
+		</p>
+		<p>
+			<input class="submit" type="submit" value="Update">
+		</p>
+	</fieldset>
+</setting>
+
 <br/>
 <br/>
 <br/>
