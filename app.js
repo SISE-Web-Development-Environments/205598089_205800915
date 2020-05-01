@@ -15,17 +15,16 @@ var loginButton;
 var setting =new Object();
 var modal;
 var angle;
+var game;
+var settings;
 //hello aviel
 
 $(document).ready(function() {
-	context = canvas.getContext("2d");
-	Start();
-	//showWelcome();
+	showWelcome();
+	showGame();
 	localStorage.setItem('p','p');
 	localStorage.setItem("aviel","avitaf");
-	//hideAllDivs();
 	welcome=document.getElementById("welcome");
-	welcome.style.display='block';
 });
 
 function KeyPressedDetective(event) {
@@ -189,6 +188,23 @@ function showAbout() {
 	modal.showModal();
 }
 
+function showSettings() {
+	hideAllDivs();
+	settings=document.getElementById("setting");
+	settings.style.display='block'
+}
+function showGame() {
+	hideAllDivs();
+	game=document.getElementById("score");
+	game.style.display='block';
+	game=document.getElementById("game");
+	game.style.display='block';
+	game=document.getElementById("time");
+	game.style.display='block';
+	context = canvas.getContext("2d");
+	Start();
+}
+
 
 function addUser() {
 	if($("#regForm").valid()) {
@@ -209,7 +225,7 @@ function UploadSetting(){
 		setting.time = document.getElementById("tme").value;
 		setting.monsters = document.getElementById("Mons").value;
 		setting.balls = document.getElementById("Balls").value;
-
+		showGame();
 	}
 }
 
@@ -223,6 +239,7 @@ function UserAndPassConfirm(){
 		if(localStorage.getItem(txtbox1.value)==txtbox2.value){
 			//the user and password correct
 			$(document).ready(function(){
+				showSettings();
 				alert(txtbox1.value+" Welcome , you have login succecsfully");
 				//$("plogin").append(" <b>"+txtbox1.value+" Welcome , you have login succecsfully</b>.");
 			});
