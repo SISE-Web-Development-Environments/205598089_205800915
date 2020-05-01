@@ -14,8 +14,7 @@ var registrationButton;
 var loginButton;
 var setting =new Object();
 var modal;
-var btn;
-var span;
+var angle;
 //hello aviel
 
 $(document).ready(function() {
@@ -251,25 +250,66 @@ function Start() {
 	pac_color = "yellow";
 	var cnt = 100;
 	var food_remain = 50;
+	var junkfood=Math.round(food_remain*60/100);
+	var food=Math.round(food_remain*30/100);
+	var superfood=Math.round(food_remain*10/100);
 	var pacman_remain = 1;
+	while(junkfood+superfood+food>food_remain)
+		junkfood--;
+	while(junkfood+superfood+food<food_remain)
+		junkfood++;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
 			if (
-				(i == 3 && j == 3) ||
-				(i == 3 && j == 4) ||
-				(i == 3 && j == 5) ||
+				(i == 1 && j == 1) ||
+				(i == 2 && j == 1) ||
+				(i == 4 && j == 1) ||
+				(i == 5 && j == 1) ||
 				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)
+				(i == 8 && j == 1) ||
+				(i == 9 && j == 1) ||
+				(i == 1 && j == 3) ||
+				(i == 3 && j == 3) ||
+				(i == 4 && j == 3) ||
+				(i == 6 && j == 3) ||
+				(i == 7 && j == 3) ||
+				(i == 9 && j == 3) ||
+				(i == 4 && j == 4) ||
+				(i == 4 && j == 5) ||
+				(i == 6 && j == 4) ||
+				(i == 6 && j == 5) ||
+				(i == 0 && j == 5) ||
+				(i == 9 && j == 5) ||
+				(i == 1 && j == 7) ||
+				(i == 2 && j == 7) ||
+				(i == 3 && j == 7) ||
+				(i == 2 && j == 8) ||
+				(i == 6 && j == 7) ||
+				(i == 7 && j == 7) ||
+				(i == 8 && j == 7) ||
+				(i == 7 && j == 8)
 			) {
 				board[i][j] = 4;
 			} else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
+					let randfood=getRandomInt(3);
 					food_remain--;
-					board[i][j] = 1;
+					if(randfood==0) {
+						board[i][j] = 1;
+						junkfood--;
+					}
+					else if (randfood==1){
+						board[i][j] = 5;
+						food--;
+					}
+					else{
+						board[i][j] = 6;
+						superfood--;
+					}
 				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
 					shape.i = i;
 					shape.j = j;
@@ -284,7 +324,18 @@ function Start() {
 	}
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
-		board[emptyCell[0]][emptyCell[1]] = 1;
+		if(junkfood>0) {
+			board[emptyCell[0]][emptyCell[1]] = 1;
+			junkfood--;
+		}
+		else if(food>0) {
+			board[emptyCell[0]][emptyCell[1]] = 5;
+			food--;
+		}
+		else if(superfood>0) {
+			board[emptyCell[0]][emptyCell[1]] = 6;
+			superfood--;
+		}
 		food_remain--;
 	}
 	keysDown = {};
@@ -340,8 +391,9 @@ function Draw() {
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 			if (board[i][j] == 2) {
+				let angles=pacmanAngles();
 				context.beginPath();
-				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+				context.arc(center.x, center.y, 30, angles[0] * Math.PI, angles[1] * Math.PI); // half circle
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //color
 				context.fill();
@@ -366,6 +418,17 @@ function Draw() {
 				context.fillStyle = "red"; //color of abstcile
 				context.fill();
 			}
+			else if (board[i][j] == 5) {
+			context.beginPath();
+			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+			context.fillStyle = "orange"; //color of the food
+			context.fill();
+		} else if (board[i][j] == 6) {
+			context.beginPath();
+			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+			context.fillStyle = "green"; //color of the food
+			context.fill();
+		}
 		}
 	}
 }
@@ -373,28 +436,39 @@ function Draw() {
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
+
 	if (x == 1) {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
+			angle=x;
 		}
 	}
 	if (x == 2) {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
+			angle=x;
 		}
 	}
 	if (x == 3) {
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
+			angle=x;
 		}
 	}
 	if (x == 4) {
 		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
+			angle=x;
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
-		score++;
+		score=score+5;
+	}
+	if (board[shape.i][shape.j] == 5) {
+		score=score+15;
+	}
+	if (board[shape.i][shape.j] == 6) {
+		score=score+25;
 	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
@@ -406,9 +480,32 @@ function UpdatePosition() {
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
-		Draw();
+			Draw();
 	}
 }
 
+	function pacmanAngles(){
+		let angles=[];
+		if(angle==1){
+			angles[0]=1.8
+			angles[1]=3.4
+		}
+		else if(angle==2){
+			angles[0]=0.7
+			angles[1]=2.3
+		}
+		else if(angle==3){
+			angles[0]=1.25
+			angles[1]=2.85
+		}
+		else{
+			angles[0]=0.15
+			angles[1]=1.85
+		}
+	return angles;
+	}
 
 
+function getRandomInt(max) {
+	return Math.floor(Math.random() * Math.floor(max));
+}
