@@ -12,16 +12,7 @@ var register;
 var login;
 var registrationButton;
 var loginButton;
-var up;
-var lleft;
-var right;
-var down;
-var firstcolor;
-var secondcolor;
-var thirdcolor;
-var balls;
-var tme;
-var monsters;
+var setting =new Object();
 var modal;
 var btn;
 var span;
@@ -38,7 +29,10 @@ $(document).ready(function() {
 	welcome.style.display='block';
 });
 
-
+function KeyPressedDetective(event) {
+	var x = event.which|| event.keyCode;
+	document.getElementById("result").innerHTML = "The Unicode value is: " + x;
+}
 
 
 $(function() {
@@ -206,17 +200,17 @@ function addUser() {
 }
 function UploadSetting(){
 	if($("#settings").valid()) {
-		leftt = document.getElementById("left").value;
-		up = document.getElementById("up").value;
-		right = document.getElementById("right").value;
-		down = document.getElementById("down").value;
-		firstcolor = document.getElementById("firstcolor").value;
-		secondcolor = document.getElementById("secondcolor").value;
-		thirdcolor = document.getElementById("thirdcolor").value;
-		tme = document.getElementById("tme").value;
-		monsters = document.getElementById("Mons").value;
-		balls = document.getElementById("Balls").value;
-		alert("The summary of settings is " + "left :" + leftt + " moves.... " + "monsters: " + monsters);
+		setting.left = document.getElementById("left").value;
+		setting.up = document.getElementById("up").value;
+		setting.right = document.getElementById("right").value;
+		setting.down = document.getElementById("down").value;
+		setting.firstcolor = document.getElementById("firstcolor").value;
+		setting.secondcolor = document.getElementById("secondcolor").value;
+		setting.thirdcolor = document.getElementById("thirdcolor").value;
+		setting.time = document.getElementById("tme").value;
+		setting.monsters = document.getElementById("Mons").value;
+		setting.balls = document.getElementById("Balls").value;
+
 	}
 }
 
@@ -347,17 +341,23 @@ function Draw() {
 				context.fill();
 				context.beginPath();
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.fillStyle = "blue"; //color of packman eye
 				context.fill();
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.fillStyle = "black"; //color of the food
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "grey"; //color
+				context.fillStyle = "grey"; //color of abstcile
+				context.fill();
+			}
+			else if (board[i][j] == 3) {
+				context.beginPath();
+				context.rect(center.x - 30, center.y - 30, 60, 60);
+				context.fillStyle = "red"; //color of abstcile
 				context.fill();
 			}
 		}
