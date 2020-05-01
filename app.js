@@ -45,6 +45,9 @@ $(function() {
 	// Initialize form validation on the registration form.
 	// It has the name attribute "registration"
 
+	jQuery.validator.addMethod("lettersOnly", function(value, element) {
+		return this.optional(element) || /^[a-z]+$/i.test(value);
+	}, "Letters only please");
 	$("form[name='registration']").validate({
 		// Specify validation rules
 		rules: {
@@ -56,6 +59,7 @@ $(function() {
 			},
 			name: {
 				required:true,
+				lettersOnly:true
 			},
 			mail: {
 				required: true,
@@ -192,11 +196,6 @@ function showAbout() {
 	modal.showModal();
 }
 
-window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-}
 
 function addUser() {
 	if($("#regForm").valid()) {
