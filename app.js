@@ -29,10 +29,21 @@ $(document).ready(function() {
 	welcome.style.display='block';
 });
 
-function KeyPressedDetective(event) {
-	var x = event.which|| event.keyCode;
+function KeyPressedDetective(event,a) {
+	var x  = event.which|| event.keyCode;
 	document.getElementById("result").innerHTML = "The Unicode value is: " + x;
+	if(a==0)
+		setting.right=x;
+	else if(a==1)
+		setting.left=x;
+	else if(a==2)
+		setting.down=x;
+	else{
+		setting.up=x;
+	}
 }
+
+
 
 
 $(function() {
@@ -200,17 +211,12 @@ function addUser() {
 }
 function UploadSetting(){
 	if($("#settings").valid()) {
-		setting.left = document.getElementById("left").value;
-		setting.up = document.getElementById("up").value;
-		setting.right = document.getElementById("right").value;
-		setting.down = document.getElementById("down").value;
 		setting.firstcolor = document.getElementById("firstcolor").value;
 		setting.secondcolor = document.getElementById("secondcolor").value;
 		setting.thirdcolor = document.getElementById("thirdcolor").value;
 		setting.time = document.getElementById("tme").value;
 		setting.monsters = document.getElementById("Mons").value;
 		setting.balls = document.getElementById("Balls").value;
-
 	}
 }
 
@@ -310,16 +316,16 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-	if (keysDown[38]) {
+	if (keysDown[setting.up]) {
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (keysDown[setting.down]) {
 		return 2;
 	}
-	if (keysDown[37]) {
+	if (keysDown[setting.left]) {
 		return 3;
 	}
-	if (keysDown[39]) {
+	if (keysDown[setting.right]) {
 		return 4;
 	}
 }
