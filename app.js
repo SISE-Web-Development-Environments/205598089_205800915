@@ -17,15 +17,14 @@ var modal;
 var angle;
 var game;
 var settings;
+var startGame=false;
 //hello aviel
 
 $(document).ready(function() {
+	showWelcome();
 	context = canvas.getContext("2d");
 	Start();
-	//showWelcome();
 	localStorage.setItem('p','p');
-	localStorage.setItem("aviel","avitaf");
-	//hideAllDivs();
 	welcome=document.getElementById("welcome");
 	welcome.style.display='block';
 });
@@ -203,7 +202,7 @@ function showAbout() {
 function showSettings() {
 	hideAllDivs();
 	settings=document.getElementById("setting");
-	settings.style.display='block'
+	settings.style.display='block';
 }
 function showGame() {
 	hideAllDivs();
@@ -213,8 +212,6 @@ function showGame() {
 	game.style.display='block';
 	game=document.getElementById("time");
 	game.style.display='block';
-	context = canvas.getContext("2d");
-	Start();
 }
 
 
@@ -233,6 +230,7 @@ function UploadSetting(){
 		setting.time = document.getElementById("tme").value;
 		setting.monsters = document.getElementById("Mons").value;
 		setting.balls = document.getElementById("Balls").value;
+		showGame();
 	}
 }
 
