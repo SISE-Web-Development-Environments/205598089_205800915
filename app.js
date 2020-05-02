@@ -23,30 +23,13 @@ var ghostArray;
 //hello aviel
 
 $(document).ready(function() {
-	setting.up=38;
-	setting.down=40;
-	setting.left=37;
-	setting.right=39;
-	//showWelcome();
-	showGame();
-	context = canvas.getContext("2d");
-	Start();
-	localStorage.setItem('p','p');
-	welcome=document.getElementById("welcome");
-	welcome.style.display='block';
-	$.validator.addMethod("lettersOnly", function(value, element) {
-		return this.optional(element) || /^[a-z]+$/i.test(value);
-	});
-	$.validator.addMethod("BallsNumberConstarint",function(value){
-		return(value<=90 && value>=50);
-	});
-	$.validator.addMethod("TimeConstratint",function(value){
-		return(value>=60 );
-	});
-	$.validator.addMethod("MonstConstraint",function(value){
-		return(value>=1 && value<=4 );
-	});
-});
+	alert("going good")
+	setting.up = 38;
+	setting.down = 40;
+	setting.left = 37;
+	setting.right = 39;
+	localStorage.setItem('p', 'p');
+}
 
 function KeyPressedDetective(event,a) {
 	var x  = event.which|| event.keyCode;
@@ -61,13 +44,10 @@ function KeyPressedDetective(event,a) {
 		setting.up=x.value;
 	}
 }
-
-
-$(function() {
-	// Initialize form validation on the registration form.
-	// It has the name attribute "registration"
-
-
+function RegValid(){
+	$.validator.addMethod("lettersOnly", function(value, element) {
+		return this.optional(element) || /^[a-z]+$/i.test(value);
+	});
 	$("form[name='registration']").validate({
 		// Specify validation rules
 		rules: {
@@ -107,11 +87,25 @@ $(function() {
 			mail: "Please enter a valid email address",
 			bday:"Please enter a valid date "
 		},
+		submitHandler: function (form) {
+			addUser();
+			form.submit();
+		}
 
 		// Make sure the form is submitted to the destination defined
-		// in the "action" attribute of the form when valid
+		// in the "action" attribute of the form when vali
 
-
+	});
+}
+function SettingValidate(){
+	$.validator.addMethod("BallsNumberConstarint",function(value){
+		return(value<=90 && value>=50);
+	});
+	$.validator.addMethod("TimeConstratint",function(value){
+		return(value>=60 );
+	});
+	$.validator.addMethod("MonstConstraint",function(value){
+		return(value>=1 && value<=4 );
 	});
 	$("form[name='settings']").validate({
 		rules: {
@@ -119,10 +113,10 @@ $(function() {
 			// of an input field. Validation rules are defined
 			// on the right side
 			right: {
-				required:true,
+				required: true,
 			},
 			left: {
-				required:true,
+				required: true,
 			},
 			up: {
 				required: true,
@@ -130,26 +124,26 @@ $(function() {
 			down: {
 				required: true,
 			},
-			firstcolor:{
-				required:true
+			firstcolor: {
+				required: true
 			},
-			secondcolor:{
-				required:true
+			secondcolor: {
+				required: true
 			},
-			thirdcolor:{
-				required:true
+			thirdcolor: {
+				required: true
 			},
-			Balls:{
-				required:true,
-				BallsNumberConstarint:true
+			Balls: {
+				required: true,
+				BallsNumberConstarint: true
 			},
-			tme:{
-				required:true,
-				TimeConstratint:true
+			tme: {
+				required: true,
+				TimeConstratint: true
 			},
-			Mons:{
-				required:true,
-				MonstConstraint:true
+			Mons: {
+				required: true,
+				MonstConstraint: true
 			}
 		},
 		// Specify validation error messages
@@ -163,16 +157,14 @@ $(function() {
 			thirdcolor: "Please enter a Value",
 			Balls: "Please enter a user name (Minmium :50 , Max:90)",
 			tme: "Please enter a valid number (Minmum :60 secs)",
-			Mons:"Please enter a valid number in the range of (Minmium :1 , Max:4)"
+			Mons: "Please enter a valid number in the range of (Minmium :1 , Max:4)"
 		},
-
-		// Make sure the form is submitted to the destination defined
-		// in the "action" attribute of the form when valid
-
-	});
-
+		submitHandler: function (form) {
+			UploadSetting();
+			form.submit();
+		}
 });
-
+}
 
 
 function hideAllDivs() {
