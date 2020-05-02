@@ -16,17 +16,31 @@ var setting =new Object();
 var modal;
 var angle;
 var game;
-var settings;
-var startGame=false;
+var settingsDisplay;
+var ghostLocations;
+var ghostCount;
 //hello aviel
 
 $(document).ready(function() {
-	showWelcome();
+	//showWelcome();
+	showGame();
 	context = canvas.getContext("2d");
 	Start();
 	localStorage.setItem('p','p');
 	welcome=document.getElementById("welcome");
 	welcome.style.display='block';
+	$.validator.addMethod("lettersOnly", function(value, element) {
+		return this.optional(element) || /^[a-z]+$/i.test(value);
+	});
+	$.validator.addMethod("BallsNumberConstarint",function(value){
+		return(value<=90 && value>=50);
+	});
+	$.validator.addMethod("TimeConstratint",function(value){
+		return(value>=60 );
+	});
+	$.validator.addMethod("MonstConstraint",function(value){
+		return(value>=1 && value<=4 );
+	});
 });
 
 function KeyPressedDetective(event,a) {
@@ -48,9 +62,7 @@ $(function() {
 	// Initialize form validation on the registration form.
 	// It has the name attribute "registration"
 
-	jQuery.validator.addMethod("lettersOnly", function(value, element) {
-		return this.optional(element) || /^[a-z]+$/i.test(value);
-	}, "Letters only please");
+
 	$("form[name='registration']").validate({
 		// Specify validation rules
 		rules: {
@@ -93,6 +105,7 @@ $(function() {
 
 		// Make sure the form is submitted to the destination defined
 		// in the "action" attribute of the form when valid
+
 
 	});
 	$("form[name='settings']").validate({
@@ -152,15 +165,6 @@ $(function() {
 		// in the "action" attribute of the form when valid
 
 	});
-	$.validator.addMethod("BallsNumberConstarint",function(value){
-		return(value<=90 && value>=50);
-	});
-	$.validator.addMethod("TimeConstratint",function(value){
-		return(value>=60 );
-	});
-	$.validator.addMethod("MonstConstraint",function(value){
-		return(value>=1 && value<=4 );
-	});
 
 });
 
@@ -201,8 +205,8 @@ function showAbout() {
 
 function showSettings() {
 	hideAllDivs();
-	settings=document.getElementById("setting");
-	settings.style.display='block';
+	settingsDisplay=document.getElementById("setting");
+	settingsDisplay.style.display='block';
 }
 function showGame() {
 	hideAllDivs();
@@ -223,7 +227,7 @@ function addUser() {
 	}
 }
 function UploadSetting(){
-	if($("#settings").valid()) {
+	if($("#settingsForm").valid()) {
 		setting.firstcolor = document.getElementById("firstcolor").value;
 		setting.secondcolor = document.getElementById("secondcolor").value;
 		setting.thirdcolor = document.getElementById("thirdcolor").value;
@@ -270,6 +274,7 @@ function Start() {
 	var food=Math.round(food_remain*30/100);
 	var superfood=Math.round(food_remain*10/100);
 	var pacman_remain = 1;
+	ghostCount=2;
 	while(junkfood+superfood+food>food_remain)
 		junkfood--;
 	while(junkfood+superfood+food<food_remain)
@@ -279,6 +284,31 @@ function Start() {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
+			if(i==0 &&j==0&&ghostCount>0){
+				board[i][j]=3;
+				ghostCount--;
+				ghostLocations=[];
+				ghostLocations.push(i);
+				ghostLocations.push(j);
+			}
+			if(i==9 &&j==9&&ghostCount>0){
+				board[i][j]=3;
+				ghostCount--;
+				ghostLocations.push(i);
+				ghostLocations.push(j);
+			}
+			if(i==0 &&j==9&&ghostCount>0){
+				board[i][j]=3;
+				ghostCount--;
+				ghostLocations.push(i);
+				ghostLocations.push(j);
+			}
+			if(i==9 &&j==0&&ghostCount>0){
+				board[i][j]=3;
+				ghostCount--;
+				ghostLocations.push(i);
+				ghostLocations.push(j);
+			}
 			if (
 				(i == 1 && j == 1) ||
 				(i == 2 && j == 1) ||
@@ -309,7 +339,7 @@ function Start() {
 				(i == 7 && j == 8)
 			) {
 				board[i][j] = 4;
-			} else {
+			} else if(board[i][j]!=3){
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					let randfood=getRandomInt(3);
@@ -430,9 +460,9 @@ function Draw() {
 			}
 			else if (board[i][j] == 3) {
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "red"; //color of abstcile
-				context.fill();
+				let ghostImage=new Image();
+				ghostImage.src="resources/ghost.png";
+				context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
 			}
 			else if (board[i][j] == 5) {
 			context.beginPath();
@@ -457,24 +487,28 @@ function UpdatePosition() {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
 			angle=x;
+			updateGhostsPosition(shape.i,shape.j);
 		}
 	}
 	if (x == 2) {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 			angle=x;
+			updateGhostsPosition(shape.i,shape.j);
 		}
 	}
 	if (x == 3) {
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 			angle=x;
+			updateGhostsPosition(shape.i,shape.j);
 		}
 	}
 	if (x == 4) {
 		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 			angle=x;
+			updateGhostsPosition(shape.i,shape.j);
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
@@ -524,4 +558,58 @@ function UpdatePosition() {
 
 function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
+}
+
+function checkIfWall(i,j) {
+	if(i<0 ||i>9 ||j<0 || j>9)
+		return false;
+	if(board[i][j]!=4){
+		return true;
+	}
+	return false;
+
+}
+
+function updateGhostsPosition(ghosts,i,j) {
+	for(let x=0;x<ghosts*2;x=x+2){
+		let originalDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]);
+		let newDistance;
+		if(checkIfWall(ghostLocations[x],ghostLocations[x+1]+1)==true){
+			newDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]+1);
+			if(isFarther(originalDistance,newDistance)==true){
+				ghostLocations[x+1]=ghostLocations[x+1]+1;
+			}
+		}
+		else if(checkIfWall(ghostLocations[x],ghostLocations[x+1]-1)==true){
+			newDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]-1);
+			if(isFarther(originalDistance,newDistance)==true){
+				ghostLocations[x+1]=ghostLocations[x+1]-1;
+			}
+		}
+		else if(checkIfWall(ghostLocations[x]+1,ghostLocations[x+1])==true){
+			newDistance=distance(i,j,ghostLocations[x]+1,ghostLocations[x+1]);
+			if(isFarther(originalDistance,newDistance)==true){
+				ghostLocations[x]=ghostLocations[x]+1;
+			}
+		}
+		else if(checkIfWall(ghostLocations[x]-1,ghostLocations[x+1])==true){
+			newDistance=distance(i,j,ghostLocations[x]-1,ghostLocations[x+1]);
+			if(isFarther(originalDistance,newDistance)==true){
+				ghostLocations[x]=ghostLocations[x]-1;
+			}
+		}
+	}
+}
+
+function distance(x1,x2,y1,y2) {
+	var a = x1 - x2;
+	var b = y1 - y2;
+
+	return Math.sqrt( a*a + b*b );
+}
+
+function isFarther(originalDistance,newDistance) {
+	if(originalDistance<newDistance)
+		return false;
+	return true;
 }
