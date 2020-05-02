@@ -23,18 +23,7 @@ var ghostArray;
 //hello aviel
 
 $(document).ready(function() {
-	setting.up = 38;
-	setting.down = 40;
-	setting.left = 37;
-	setting.right = 39;
-	setting.firstcolor="grey";
-	setting.secondcolor="blue";
-	setting.thirdcolo="brown";
-	setting.monsters=4;
-	setting.balls=70;
-	setting.time=70;
-	Start();
-	showGame();
+	showWelcome();
 	context = canvas.getContext("2d");
 	localStorage.setItem('p', 'p');
 });
@@ -171,6 +160,7 @@ function SettingValidate(){
 		},
 		submitHandler: function (form) {
 			UploadSetting();
+			Start();
 			showGame();
 		}
 });
@@ -589,21 +579,5 @@ function checkIfWall(i,j) {
 		return true;
 	}
 	return false;
-}
-
-
-
-
-function distance(x1,x2,y1,y2) {
-	var a = x1 - x2;
-	var b = y1 - y2;
-
-	return Math.sqrt( a*a + b*b );
-}
-
-function isFarther(originalDistance,newDistance) {
-	if(originalDistance<newDistance)
-		return false;
-	return true;
 }
 
