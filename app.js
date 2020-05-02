@@ -430,7 +430,6 @@ function GetKeyPressed() {
 	if (keysDown[setting.up]) {
 		return 1;
 	}
-
 	if (keysDown[setting.down]) {
 		return 2;
 	}
