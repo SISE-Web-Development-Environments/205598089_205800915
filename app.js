@@ -23,6 +23,10 @@ var ghostArray;
 //hello aviel
 
 $(document).ready(function() {
+	setting.up=38;
+	setting.down=40;
+	setting.left=37;
+	setting.right=39;
 	//showWelcome();
 	showGame();
 	context = canvas.getContext("2d");
@@ -48,13 +52,13 @@ function KeyPressedDetective(event,a) {
 	var x  = event.which|| event.keyCode;
 	document.getElementById("result").innerHTML = "The Unicode value is: " + x;
 	if(a==0)
-		setting.right=x;
+		setting.right=x.value;
 	else if(a==1)
-		setting.left=x;
+		setting.left=x.value;
 	else if(a==2)
-		setting.down=x;
+		setting.down=x.value;
 	else{
-		setting.up=x;
+		setting.up=x.value;
 	}
 }
 

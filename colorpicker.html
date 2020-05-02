@@ -1,84 +1,127 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>jQuery UI Slider - Colorpicker</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <style>
-        #red, #green, #blue {
-            float: left;
-            clear: left;
-            width: 300px;
-            margin: 15px;
-        }
-        #swatch {
-            width: 120px;
-            height: 100px;
-            margin-top: 18px;
-            margin-left: 350px;
-            background-image: none;
-        }
-        #red .ui-slider-range { background: #ef2929; }
-        #red .ui-slider-handle { border-color: #ef2929; }
-        #green .ui-slider-range { background: #8ae234; }
-        #green .ui-slider-handle { border-color: #8ae234; }
-        #blue .ui-slider-range { background: #729fcf; }
-        #blue .ui-slider-handle { border-color: #729fcf; }
-    </style>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $( function() {
-            function hexFromRGB(r, g, b) {
-                var hex = [
-                    r.toString( 16 ),
-                    g.toString( 16 ),
-                    b.toString( 16 )
-                ];
-                $.each( hex, function( nr, val ) {
-                    if ( val.length === 1 ) {
-                        hex[ nr ] = "0" + val;
-                    }
-                });
-                return hex.join( "" ).toUpperCase();
+<script>
+    $("form[name='settings']").validate({
+        rules: {
+            // The key name on the left side is the name attribute
+            // of an input field. Validation rules are defined
+            // on the right side
+            right: {
+                required:true,
+            },
+            left: {
+                required:true,
+            },
+            up: {
+                required: true,
+            },
+            down: {
+                required: true,
+            },
+            firstcolor:{
+                required:true
+            },
+            secondcolor:{
+                required:true
+            },
+            thirdcolor:{
+                required:true
+            },
+            Balls:{
+                required:true,
+                BallsNumberConstarint:true
+            },
+            tme:{
+                required:true,
+                TimeConstratint:true
+            },
+            Mons:{
+                required:true,
+                MonstConstraint:true
             }
-            function refreshSwatch() {
-                var red = $( "#red" ).slider( "value" ),
-                    green = $( "#green" ).slider( "value" ),
-                    blue = $( "#blue" ).slider( "value" ),
-                    hex = hexFromRGB( red, green, blue );
-                $( "#swatch" ).css( "background-color", "#" + hex );
-            }
+        },
+        // Specify validation error messages
+        messages: {
+            right: "Please enter Value",
+            left: "Please enter Value",
+            up: "Please enter Value",
+            down: "Please enter Value",
+            firstcolor: "Please enter a Value",
+            secondcolor: "Please enter a Value",
+            thirdcolor: "Please enter a Value",
+            Balls: "Please enter a user name (Minmium :50 , Max:90)",
+            tme: "Please enter a valid number (Minmum :60 secs)",
+            Mons:"Please enter a valid number in the range of (Minmium :1 , Max:4)"
+        },
 
-            $( "#red, #green, #blue" ).slider({
-                orientation: "horizontal",
-                range: "min",
-                max: 255,
-                value: 127,
-                slide: refreshSwatch,
-                change: refreshSwatch
-            });
-            $( "#red" ).slider( "value", 255 );
-            $( "#green" ).slider( "value", 140 );
-            $( "#blue" ).slider( "value", 60 );
-        } );
-    </script>
-</head>
-<body class="ui-widget-content" style="border:0;">
+        // Make sure the form is submitted to the destination defined
+        // in the "action" attribute of the form when valid
+        submitHandler: function (form) {
+            UploadSetting();
+            form.submit();
+        }
 
-<p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;">
-    <span class="ui-icon ui-icon-pencil" style="float:left; margin:-2px 5px 0 0;"></span>
-    Simple Colorpicker
-</p>
+    });
+</script>
+<div id="setting">
+    <form name="settings"  id="settings" >
+        <fieldset>
+            <legend>Settings</legend>
+            <strong>information about aviel and ron </strong>
+            <br><br>
+            BLA BLA BLA
+            <br><br>
+            <p>
+                <label id="moveButtons"><b>Moves Buttons </b></label>
+                <br><br>
+                Right : <input id="right"  name ="right" type="text" size="40"  onkeydown="KeyPressedDetective(event,0)">
+                <br><br>
+                Left : <input id="left"  name ="left" type="text" size="40"  onkeydown="KeyPressedDetective(event,1)">
+                <br><br>
+                Down : <input id="down"  name ="down" type="text" size="40"  onkeydown="KeyPressedDetective(event,2)">
+                <br><br>
+                UP : <input id="up" name="up" type="text" size="40" onkeydown="KeyPressedDetective(event),3">
+                <br><br>
+                <result id="result"> </result>
+                <br><br>
+            </p>
+            <p>
+                <label id="Balls Color"><b>Choose colors for the balls  </b></label>
+                <br><br>
+                <label for="firstcolor" >60 % , 5 points ball: </label>
+                <input id="firstcolor" name="firstcolor" type="color" >
+                <br><br>
+                <label for="secondcolor" >30 % , 15 points ball:  </label>
+                <input id="secondcolor" name="secondcolor" type="color" >
+                <br><br>
+                <label for="thirdcolor" >10 % , 25 points ball:  </label>
+                <input id="thirdcolor" name="thirdcolor" type="color" >
+                <br><br>
+                <br><br>
+            </p>
+            <p>
+                <label id="BallsinGame"><b>Number of balls in a game </b></label>
+                <br><br>
+                Balls Number : <input id="Balls" name="Balls" type="integer" aria-required="true" class="error">
+            </p>
+            <p>
+                <label id="SetTime" ><b>Set Time for the Game</b> </label>
+                <br><br>
+                Set the time : <input id="tme" name="tme" type="integer" aria-required="true" class="error">
+                <br><br>
+            </p>
+            <p>
+                <label id="Monsters Numbers"><b>Set Numbers of Monsters</b>  </label>
+                <br><br>
+                Monsters Numbers : <input id="Mons" name="Mons" type="integer" aria-required="true" class="error">
+                <br><br>
+            </p>
+            <label id="RandomSetting"> RandomSetting </label>
+            <br><br>
+            <input type=button onclick="" value="Random">
+            <br><br>
+            <p>
+                <input class="submit" type="submit" value="Update">
+            </p>
+        </fieldset>
+    </form>
 
-<div id="red"></div>
-<div id="green"></div>
-<div id="blue"></div>
-
-<div id="swatch" class="ui-widget-content ui-corner-all"></div>
-
-
-</body>
-</html>
+</div>
