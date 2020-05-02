@@ -508,28 +508,28 @@ function UpdatePosition() {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
 			angle=x;
-			updateGhostsPosition(shape.i,shape.j);
+			updateGhostsPosition(ghostCount,shape.i,shape.j);
 		}
 	}
 	if (x == 2) {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 			angle=x;
-			updateGhostsPosition(shape.i,shape.j);
+			updateGhostsPosition(ghostCount,shape.i,shape.j);
 		}
 	}
 	if (x == 3) {
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 			angle=x;
-			updateGhostsPosition(shape.i,shape.j);
+			updateGhostsPosition(ghostCount,shape.i,shape.j);
 		}
 	}
 	if (x == 4) {
 		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 			angle=x;
-			updateGhostsPosition(shape.i,shape.j);
+			updateGhostsPosition(ghostCount,shape.i,shape.j);
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
@@ -584,7 +584,7 @@ function getRandomInt(max) {
 function checkIfWall(i,j) {
 	if(i<0 ||i>9 ||j<0 || j>9)
 		return false;
-	if(board[i][j]!=4){
+	if(board[i][j]!==4){
 		return true;
 	}
 	return false;
