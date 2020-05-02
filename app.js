@@ -23,25 +23,27 @@ var ghostArray;
 //hello aviel
 
 $(document).ready(function() {
-	alert("going good")
+	Start();
+	showWelcome();
+	alert("going good");
 	setting.up = 38;
 	setting.down = 40;
 	setting.left = 37;
 	setting.right = 39;
 	localStorage.setItem('p', 'p');
-}
+});
 
 function KeyPressedDetective(event,a) {
 	var x  = event.which|| event.keyCode;
 	document.getElementById("result").innerHTML = "The Unicode value is: " + x;
 	if(a==0)
-		setting.right=x.value;
+		setting.right=x;
 	else if(a==1)
-		setting.left=x.value;
+		setting.left=x;
 	else if(a==2)
-		setting.down=x.value;
+		setting.down=x;
 	else{
-		setting.up=x.value;
+		setting.up=x;
 	}
 }
 function RegValid(){
@@ -89,13 +91,15 @@ function RegValid(){
 		},
 		submitHandler: function (form) {
 			addUser();
-			form.submit();
+
 		}
+
 
 		// Make sure the form is submitted to the destination defined
 		// in the "action" attribute of the form when vali
 
 	});
+	showLogin();
 }
 function SettingValidate(){
 	$.validator.addMethod("BallsNumberConstarint",function(value){
@@ -161,9 +165,10 @@ function SettingValidate(){
 		},
 		submitHandler: function (form) {
 			UploadSetting();
-			form.submit();
 		}
 });
+//	Start();
+	showGame();
 }
 
 
@@ -207,6 +212,7 @@ function showSettings() {
 }
 function showGame() {
 	hideAllDivs();
+	alert(setting.right+"  "+setting.left+"   "+setting.down+" "+setting.up);
 	game=document.getElementById("score");
 	game.style.display='block';
 	game=document.getElementById("game");
@@ -448,10 +454,10 @@ function Draw() {
 			center.y = j * 60 + 30;
 			//alert(ghostArray[i][j]);
 			if(ghostArray[i][j]==3){
-				context.beginPath();
+				//context.beginPath();
 				let ghostImage=new Image();
 				ghostImage.src="resources/ghost.png";
-				context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
+			//	context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
 			}
 			else if (board[i][j] == 2) {
 				let angles=pacmanAngles();

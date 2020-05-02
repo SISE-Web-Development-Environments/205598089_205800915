@@ -20,7 +20,7 @@
 	<a id="aboutOpen" href="javascript:showAbout">About</a>
 </div>
 
-<div id="welcome">
+<div id="welcome" display="block">
 	<button id="registrationButton" onclick="showRegistration()">Register</button>
 	<button id="loginButton" onclick="showLogin()">Login</button>
 	<br><br>
@@ -42,10 +42,7 @@
 		<input type="submit" value="Submit" onclick="RegValid()">
 	</form>
 </div>
-
-<!--
-	-->
-<div id="login">
+<div id="login" display="none">
 	<login>
 		User-Name : <input type="text" id="txtbox1"/>
 		<br><br>
@@ -61,8 +58,8 @@
 	<br/>
 	<br/>
 </div>
-<div id="setting">
-	<form name="settings" id="settingsForm" onsubmit="UploadSetting()">
+<div id="setting" display="none">
+	<form name="settings" id="settingsForm" >
 		<fieldset>
 			<legend>Settings</legend>
 			<strong>information about aviel and ron </strong>
@@ -119,7 +116,7 @@
 			<input type=button onclick="" value="Random">
 			<br><br>
 			<p>
-				<input class="submit" type="submit" value="Update">
+				<input class="submit" type="submit" value="Update" onclick="SettingValidate()">
 			</p>
 		</fieldset>
 	</form>
