@@ -19,6 +19,7 @@ var game;
 var settingsDisplay;
 var ghostLocations;
 var ghostCount;
+var ghostArray;
 //hello aviel
 
 $(document).ready(function() {
@@ -268,6 +269,7 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
+	ghostArray=new Array();
 	var cnt = 100;
 	var food_remain = 50;
 	var junkfood=Math.round(food_remain*60/100);
@@ -282,29 +284,30 @@ function Start() {
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
+		ghostArray[i]=new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
 			if(i==0 &&j==0&&ghostCount>0){
-				board[i][j]=3;
+				ghostArray[i][j]=3;
 				ghostCount--;
 				ghostLocations=[];
 				ghostLocations.push(i);
 				ghostLocations.push(j);
 			}
 			if(i==9 &&j==9&&ghostCount>0){
-				board[i][j]=3;
+				ghostArray[i][j]=3;
 				ghostCount--;
 				ghostLocations.push(i);
 				ghostLocations.push(j);
 			}
 			if(i==0 &&j==9&&ghostCount>0){
-				board[i][j]=3;
+				ghostArray[i][j]=3;
 				ghostCount--;
 				ghostLocations.push(i);
 				ghostLocations.push(j);
 			}
 			if(i==9 &&j==0&&ghostCount>0){
-				board[i][j]=3;
+				ghostArray[i][j]=3;
 				ghostCount--;
 				ghostLocations.push(i);
 				ghostLocations.push(j);
@@ -339,21 +342,28 @@ function Start() {
 				(i == 7 && j == 8)
 			) {
 				board[i][j] = 4;
-			} else if(board[i][j]!=3){
+				ghostArray[i][j]=0;
+			} else{
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					let randfood=getRandomInt(3);
 					food_remain--;
 					if(randfood==0) {
 						board[i][j] = 1;
+						if(ghostArray[i][j]!=3)
+							ghostArray[i][j]=0;
 						junkfood--;
 					}
 					else if (randfood==1){
 						board[i][j] = 5;
+						if(ghostArray[i][j]!=3)
+							ghostArray[i][j]=0;
 						food--;
 					}
 					else{
 						board[i][j] = 6;
+						if(ghostArray[i][j]!=3)
+							ghostArray[i][j]=0;
 						superfood--;
 					}
 				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
@@ -361,8 +371,12 @@ function Start() {
 					shape.j = j;
 					pacman_remain--;
 					board[i][j] = 2;
+					if(ghostArray[i][j]!=3)
+						ghostArray[i][j]=0;
 				} else {
 					board[i][j] = 0;
+					if(ghostArray[i][j]!=3)
+						ghostArray[i][j]=0;
 				}
 				cnt--;
 			}
@@ -436,7 +450,14 @@ function Draw() {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-			if (board[i][j] == 2) {
+			//alert(ghostArray[i][j]);
+			if(ghostArray[i][j]==3){
+				context.beginPath();
+				let ghostImage=new Image();
+				ghostImage.src="resources/ghost.png";
+				context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
+			}
+			else if (board[i][j] == 2) {
 				let angles=pacmanAngles();
 				context.beginPath();
 				context.arc(center.x, center.y, 30, angles[0] * Math.PI, angles[1] * Math.PI); // half circle
@@ -458,12 +479,6 @@ function Draw() {
 				context.fillStyle = "grey"; //color of abstcile
 				context.fill();
 			}
-			else if (board[i][j] == 3) {
-				context.beginPath();
-				let ghostImage=new Image();
-				ghostImage.src="resources/ghost.png";
-				context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
-			}
 			else if (board[i][j] == 5) {
 			context.beginPath();
 			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
@@ -475,6 +490,8 @@ function Draw() {
 			context.fillStyle = "green"; //color of the food
 			context.fill();
 		}
+
+
 		}
 	}
 }
@@ -577,25 +594,33 @@ function updateGhostsPosition(ghosts,i,j) {
 		if(checkIfWall(ghostLocations[x],ghostLocations[x+1]+1)==true){
 			newDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]+1);
 			if(isFarther(originalDistance,newDistance)==true){
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
 				ghostLocations[x+1]=ghostLocations[x+1]+1;
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
 			}
 		}
 		else if(checkIfWall(ghostLocations[x],ghostLocations[x+1]-1)==true){
 			newDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]-1);
 			if(isFarther(originalDistance,newDistance)==true){
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
 				ghostLocations[x+1]=ghostLocations[x+1]-1;
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
 			}
 		}
 		else if(checkIfWall(ghostLocations[x]+1,ghostLocations[x+1])==true){
 			newDistance=distance(i,j,ghostLocations[x]+1,ghostLocations[x+1]);
 			if(isFarther(originalDistance,newDistance)==true){
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
 				ghostLocations[x]=ghostLocations[x]+1;
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
 			}
 		}
 		else if(checkIfWall(ghostLocations[x]-1,ghostLocations[x+1])==true){
 			newDistance=distance(i,j,ghostLocations[x]-1,ghostLocations[x+1]);
 			if(isFarther(originalDistance,newDistance)==true){
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
 				ghostLocations[x]=ghostLocations[x]-1;
+				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
 			}
 		}
 	}
@@ -613,3 +638,4 @@ function isFarther(originalDistance,newDistance) {
 		return false;
 	return true;
 }
+
