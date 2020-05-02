@@ -23,13 +23,19 @@ var ghostArray;
 //hello aviel
 
 $(document).ready(function() {
-	Start();
-	showWelcome();
-	alert("going good");
 	setting.up = 38;
 	setting.down = 40;
 	setting.left = 37;
 	setting.right = 39;
+	setting.firstcolor="grey";
+	setting.secondcolor="blue";
+	setting.thirdcolo="brown";
+	setting.monsters=4;
+	setting.balls=70;
+	setting.time=70;
+	Start();
+	showGame();
+	context = canvas.getContext("2d");
 	localStorage.setItem('p', 'p');
 });
 
@@ -91,7 +97,7 @@ function RegValid(){
 		},
 		submitHandler: function (form) {
 			addUser();
-
+			showLogin();
 		}
 
 
@@ -99,7 +105,7 @@ function RegValid(){
 		// in the "action" attribute of the form when vali
 
 	});
-	showLogin();
+
 }
 function SettingValidate(){
 	$.validator.addMethod("BallsNumberConstarint",function(value){
@@ -165,10 +171,11 @@ function SettingValidate(){
 		},
 		submitHandler: function (form) {
 			UploadSetting();
+			showGame();
 		}
 });
-//	Start();
-	showGame();
+
+
 }
 
 
@@ -212,7 +219,6 @@ function showSettings() {
 }
 function showGame() {
 	hideAllDivs();
-	alert(setting.right+"  "+setting.left+"   "+setting.down+" "+setting.up);
 	game=document.getElementById("score");
 	game.style.display='block';
 	game=document.getElementById("game");
@@ -223,22 +229,18 @@ function showGame() {
 
 
 function addUser() {
-	if($("#regForm").valid()) {
 		let user = document.getElementById("user");
 		let pass = document.getElementById("pass");
 		localStorage.setItem(user.value, pass.value);
-	}
 }
 function UploadSetting(){
-	if($("#settingsForm").valid()) {
 		setting.firstcolor = document.getElementById("firstcolor").value;
 		setting.secondcolor = document.getElementById("secondcolor").value;
 		setting.thirdcolor = document.getElementById("thirdcolor").value;
 		setting.time = document.getElementById("tme").value;
 		setting.monsters = document.getElementById("Mons").value;
 		setting.balls = document.getElementById("Balls").value;
-		showGame();
-	}
+
 }
 
 
@@ -264,21 +266,40 @@ function UserAndPassConfirm(){
 	}
 }
 
-
-
+function CreateGhostsArray(){
+	ghostArray=new Array();
+	for(let i=0;i<setting.monsters;i++){ //setting.monsters
+		ghostArray[i]=new Object();
+		if(i==0){
+			ghostArray[i].x=0;
+			ghostArray[i].y=0;
+		}
+		else if(i==1){
+			ghostArray[i].x=9;
+			ghostArray[i].y=9;
+		}
+		else if(i==2){
+			ghostArray[i].x=9;
+			ghostArray[i].y=0;
+		}
+		else if(i==3){
+			ghostArray[i].x=0;
+			ghostArray[i].y=9;
+		}
+	}
+}
 
 function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
-	ghostArray=new Array();
+	CreateGhostsArray();
 	var cnt = 100;
 	var food_remain = 50;
 	var junkfood=Math.round(food_remain*60/100);
 	var food=Math.round(food_remain*30/100);
 	var superfood=Math.round(food_remain*10/100);
 	var pacman_remain = 1;
-	ghostCount=2;
 	while(junkfood+superfood+food>food_remain)
 		junkfood--;
 	while(junkfood+superfood+food<food_remain)
@@ -286,34 +307,8 @@ function Start() {
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
-		ghostArray[i]=new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
-			if(i==0 &&j==0&&ghostCount>0){
-				ghostArray[i][j]=3;
-				ghostCount--;
-				ghostLocations=[];
-				ghostLocations.push(i);
-				ghostLocations.push(j);
-			}
-			if(i==9 &&j==9&&ghostCount>0){
-				ghostArray[i][j]=3;
-				ghostCount--;
-				ghostLocations.push(i);
-				ghostLocations.push(j);
-			}
-			if(i==0 &&j==9&&ghostCount>0){
-				ghostArray[i][j]=3;
-				ghostCount--;
-				ghostLocations.push(i);
-				ghostLocations.push(j);
-			}
-			if(i==9 &&j==0&&ghostCount>0){
-				ghostArray[i][j]=3;
-				ghostCount--;
-				ghostLocations.push(i);
-				ghostLocations.push(j);
-			}
 			if (
 				(i == 1 && j == 1) ||
 				(i == 2 && j == 1) ||
@@ -344,7 +339,6 @@ function Start() {
 				(i == 7 && j == 8)
 			) {
 				board[i][j] = 4;
-				ghostArray[i][j]=0;
 			} else{
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
@@ -352,20 +346,14 @@ function Start() {
 					food_remain--;
 					if(randfood==0) {
 						board[i][j] = 1;
-						if(ghostArray[i][j]!=3)
-							ghostArray[i][j]=0;
 						junkfood--;
 					}
 					else if (randfood==1){
 						board[i][j] = 5;
-						if(ghostArray[i][j]!=3)
-							ghostArray[i][j]=0;
 						food--;
 					}
 					else{
 						board[i][j] = 6;
-						if(ghostArray[i][j]!=3)
-							ghostArray[i][j]=0;
 						superfood--;
 					}
 				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
@@ -373,12 +361,10 @@ function Start() {
 					shape.j = j;
 					pacman_remain--;
 					board[i][j] = 2;
-					if(ghostArray[i][j]!=3)
-						ghostArray[i][j]=0;
+
+
 				} else {
 					board[i][j] = 0;
-					if(ghostArray[i][j]!=3)
-						ghostArray[i][j]=0;
 				}
 				cnt--;
 			}
@@ -421,7 +407,7 @@ function Start() {
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0) {
+	while (board[i][j] != 0 ) {
 		i = Math.floor(Math.random() * 9 + 1);
 		j = Math.floor(Math.random() * 9 + 1);
 	}
@@ -452,12 +438,14 @@ function Draw() {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-			//alert(ghostArray[i][j]);
-			if(ghostArray[i][j]==3){
-				//context.beginPath();
+			if((setting.monsters>0 && ghostArray[0].x==i &&ghostArray[0].y==j )||
+				(setting.monsters>1 && ghostArray[1].x==i &&ghostArray[1].y==j ) ||
+				(setting.monsters>2 && ghostArray[2].x==i &&ghostArray[2].y==j) ||
+				(setting.monsters>2 && ghostArray[3].x==i &&ghostArray[3].y==j) ){
+				context.beginPath();
 				let ghostImage=new Image();
-				ghostImage.src="resources/ghost.png";
-			//	context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
+				ghostImage.src="resources/ghost.jpg";
+				context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
 			}
 			else if (board[i][j] == 2) {
 				let angles=pacmanAngles();
@@ -486,48 +474,47 @@ function Draw() {
 			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 			context.fillStyle = "orange"; //color of the food
 			context.fill();
-		} else if (board[i][j] == 6) {
+		}else if (board[i][j] == 6) {
 			context.beginPath();
 			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 			context.fillStyle = "green"; //color of the food
 			context.fill();
 		}
-
-
 		}
 	}
 }
 
+
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
-
 	if (x == 1) {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
 			angle=x;
-			updateGhostsPosition(ghostCount,shape.i,shape.j);
+			UpdateGhostPosition();
+
 		}
 	}
 	if (x == 2) {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 			angle=x;
-			updateGhostsPosition(ghostCount,shape.i,shape.j);
+			UpdateGhostPosition();
 		}
 	}
 	if (x == 3) {
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 			angle=x;
-			updateGhostsPosition(ghostCount,shape.i,shape.j);
+			UpdateGhostPosition();
 		}
 	}
 	if (x == 4) {
 		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 			angle=x;
-			updateGhostsPosition(ghostCount,shape.i,shape.j);
+			UpdateGhostPosition();
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
@@ -540,6 +527,7 @@ function UpdatePosition() {
 		score=score+25;
 	}
 	board[shape.i][shape.j] = 2;
+
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if (score >= 20 && time_elapsed <= 10) {
@@ -549,10 +537,25 @@ function UpdatePosition() {
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
+
 			Draw();
 	}
 }
-
+function UpdateGhostPosition(){
+	for(let i=0;i<setting.monsters;i++){
+		if(ghostArray[i].x !=9 && checkIfWall(ghostArray[i].x+1,ghostArray[i].y ) && shape.i>ghostArray[i].x){
+			ghostArray[i].x=ghostArray[i].x+1;
+		}else if (ghostArray[i].y !=0 && checkIfWall(ghostArray[i].x,ghostArray[i].y-1) && shape.j<ghostArray[i].y){
+			ghostArray[i].y=ghostArray[i].y-1;
+		}
+		else if (ghostArray[i].x !=0 && checkIfWall(ghostArray[i].x-1,ghostArray[i].y ) && shape.i<ghostArray[i].x){
+			ghostArray[i].x=ghostArray[i].x-1;
+		}
+		else if(ghostArray[i].y !=9 && checkIfWall(ghostArray[i].x,ghostArray[i].y+1 ) && shape.j>ghostArray[i].y){
+			ghostArray[i].x=ghostArray[i].y+1;
+		}
+	}
+}
 	function pacmanAngles(){
 		let angles=[];
 		if(angle==1){
@@ -586,47 +589,10 @@ function checkIfWall(i,j) {
 		return true;
 	}
 	return false;
-
 }
 
-function updateGhostsPosition(ghosts,i,j) {
-	for(let x=0;x<ghosts*2;x=x+2){
-		let originalDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]);
-		let newDistance;
-		if(checkIfWall(ghostLocations[x],ghostLocations[x+1]+1)==true){
-			newDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]+1);
-			if(isFarther(originalDistance,newDistance)==true){
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
-				ghostLocations[x+1]=ghostLocations[x+1]+1;
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
-			}
-		}
-		else if(checkIfWall(ghostLocations[x],ghostLocations[x+1]-1)==true){
-			newDistance=distance(i,j,ghostLocations[x],ghostLocations[x+1]-1);
-			if(isFarther(originalDistance,newDistance)==true){
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
-				ghostLocations[x+1]=ghostLocations[x+1]-1;
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
-			}
-		}
-		else if(checkIfWall(ghostLocations[x]+1,ghostLocations[x+1])==true){
-			newDistance=distance(i,j,ghostLocations[x]+1,ghostLocations[x+1]);
-			if(isFarther(originalDistance,newDistance)==true){
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
-				ghostLocations[x]=ghostLocations[x]+1;
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
-			}
-		}
-		else if(checkIfWall(ghostLocations[x]-1,ghostLocations[x+1])==true){
-			newDistance=distance(i,j,ghostLocations[x]-1,ghostLocations[x+1]);
-			if(isFarther(originalDistance,newDistance)==true){
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=0;
-				ghostLocations[x]=ghostLocations[x]-1;
-				ghostArray[ghostLocations[x]][ghostLocations[x+1]]=3;
-			}
-		}
-	}
-}
+
+
 
 function distance(x1,x2,y1,y2) {
 	var a = x1 - x2;
