@@ -10,22 +10,23 @@ var welcome;
 var menu;
 var register;
 var login;
-var registrationButton;
-var loginButton;
 var setting =new Object();
 var modal;
 var angle;
 var game;
 var settingsDisplay;
-var ghostLocations;
-var ghostCount;
 var ghostArray;
+var monster;
+var ateMonster;
+var lives;
 //hello aviel
 
 $(document).ready(function() {
 	showWelcome();
 	context = canvas.getContext("2d");
 	localStorage.setItem('p', 'p');
+	ateMonster=false;
+	lives=5;
 });
 
 function KeyPressedDetective(event,a) {
@@ -258,11 +259,14 @@ function UserAndPassConfirm(){
 
 function CreateGhostsArray(){
 	ghostArray=new Array();
+	monster=new Object();
 	for(let i=0;i<setting.monsters;i++){ //setting.monsters
 		ghostArray[i]=new Object();
 		if(i==0){
 			ghostArray[i].x=0;
 			ghostArray[i].y=0;
+			monster.x=0;
+			monster.y=1;
 		}
 		else if(i==1){
 			ghostArray[i].x=9;
@@ -437,6 +441,13 @@ function Draw() {
 				ghostImage.src="resources/ghost.jpg";
 				context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
 			}
+			else if(!ateMonster&&monster.x==i&&monster.y==j){
+				context.beginPath();
+				let monsterImage=new Image();
+				monsterImage.src="resources/monster.jpg";
+				context.drawImage(monsterImage,center.x-15,center.y-15,40,40);
+			}
+
 			else if (board[i][j] == 2) {
 				let angles=pacmanAngles();
 				context.beginPath();
@@ -451,7 +462,7 @@ function Draw() {
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color of the food
+				context.fillStyle = setting.firstcolor; //color of the food
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
@@ -462,12 +473,12 @@ function Draw() {
 			else if (board[i][j] == 5) {
 			context.beginPath();
 			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-			context.fillStyle = "orange"; //color of the food
+			context.fillStyle = setting.secondcolor; //color of the food
 			context.fill();
 		}else if (board[i][j] == 6) {
 			context.beginPath();
 			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-			context.fillStyle = "green"; //color of the food
+			context.fillStyle = setting.thirdcolor; //color of the food
 			context.fill();
 		}
 		}
@@ -518,15 +529,29 @@ function UpdatePosition() {
 	}
 	board[shape.i][shape.j] = 2;
 
+
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
+	if(shape.i==monster.x&&shape.j==monster.y){
+		ateMonster=true;
+		score=score+50;
+	}
+	for(let i=0;i<setting.monsters;i++){
+		if(ghostArray[i].x==shape.i&&ghostArray[i].y==shape.j){
+			var tempScore=score;
+			Start();
+			score=tempScore-10;
+			return;
+		}
+	}
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score == 50) {
+	else if(time_elapsed>=setting.time){
 		window.clearInterval(interval);
 		window.alert("Game completed");
-	} else {
+	}
+	else {
 
 			Draw();
 	}
