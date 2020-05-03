@@ -22,7 +22,6 @@ var lives;
 var song;
 var username;
 //hello aviel
-
 $(document).ready(function() {
 	showWelcome();
 	context = canvas.getContext("2d");
@@ -43,6 +42,19 @@ function KeyPressedDetective(event,a) {
 		setting.down=x;
 	else{
 		setting.up=x;
+	}
+}
+function getStringFromKeyCode(num){
+	if(num==38)
+		return "Arrow Up";
+	else if(num==39)
+		return "Arrow Right";
+	else if(num==40)
+		return "Arrow Down";
+	else if(num==37)
+	return "Arrow Left";
+	else{
+		return String.fromCharCode(num);
 	}
 }
 function RegValid(){
@@ -105,7 +117,7 @@ function SettingValidate(){
 		return(value<=90 && value>=50);
 	});
 	$.validator.addMethod("TimeConstratint",function(value){
-		return(value>=60 );
+		return value>=60;
 	});
 	$.validator.addMethod("MonstConstraint",function(value){
 		return(value>=1 && value<=4 );
@@ -164,12 +176,22 @@ function SettingValidate(){
 		},
 		submitHandler: function (form) {
 			UploadSetting();
+			UpdateStaticSetting();
 			Start();
 			showGame();
 		}
-});
+	});
 
-
+}
+function UpdateStaticSetting(){
+	$("movementchosen").append("  Up: "+getStringFromKeyCode(setting.up)+"  | Down: "+getStringFromKeyCode(setting.down)
+		+" |  Right: "+getStringFromKeyCode(setting.right)+" | Left: "+getStringFromKeyCode(setting.left)+" .");
+	$("ballschosen").append(setting.balls+".");
+	$("monsterschosen").append(setting.monsters+".");
+	$("timechosen").append(setting.time+".");
+	$("color1").css({backgroundColor: setting.firstcolor});
+	$("color3").css({backgroundColor: setting.thirdcolor});
+	$("color2").css({backgroundColor: setting.secondcolor});
 }
 
 
@@ -202,7 +224,7 @@ function showWelcome(){
 
 function showAbout() {
 	modal=document.getElementById("modal");
-	modal.style.display='block'
+	modal.style.display='block';
 	modal.showModal();
 }
 
@@ -219,21 +241,24 @@ function showGame() {
 	game.style.display='block';
 	game=document.getElementById("time");
 	game.style.display='block';
+	game=document.getElementById("ChosenSetting");
+	game.style.display='block';
+
 }
 
 
 function addUser() {
-		let user = document.getElementById("user");
-		let pass = document.getElementById("pass");
-		localStorage.setItem(user.value, pass.value);
+	let user = document.getElementById("user");
+	let pass = document.getElementById("pass");
+	localStorage.setItem(user.value, pass.value);
 }
 function UploadSetting(){
-		setting.firstcolor = document.getElementById("firstcolor").value;
-		setting.secondcolor = document.getElementById("secondcolor").value;
-		setting.thirdcolor = document.getElementById("thirdcolor").value;
-		setting.time = document.getElementById("tme").value;
-		setting.monsters = document.getElementById("Mons").value;
-		setting.balls = document.getElementById("Balls").value;
+	setting.firstcolor = document.getElementById("firstcolor").value;
+	setting.secondcolor = document.getElementById("secondcolor").value;
+	setting.thirdcolor = document.getElementById("thirdcolor").value;
+	setting.time = document.getElementById("tme").value;
+	setting.monsters = document.getElementById("Mons").value;
+	setting.balls = document.getElementById("Balls").value;
 
 }
 
@@ -250,7 +275,7 @@ function UserAndPassConfirm(){
 				showSettings();
 				username=txtbox1.value;
 				alert(txtbox1.value+" Welcome , you have login succecsfully");
-				//$("plogin").append(" <b>"+txtbox1.value+" Welcome , you have login succecsfully</b>.");
+
 			});
 		}
 		else{
@@ -264,27 +289,34 @@ function UserAndPassConfirm(){
 function CreateGhostsArray(){
 	ghostArray=new Array();
 	monster=new Object();
-	for(let i=0;i<setting.monsters;i++){ //setting.monsters
-		ghostArray[i]=new Object();
-		if(i==0){
-			ghostArray[i].x=0;
-			ghostArray[i].y=0;
+	for(let x=0;x<4;x++){ //setting.monsters
+		ghostArray[x]=new Object();
+		if(x<setting.monsters){
+		if(x==0){
+			ghostArray[x].x=0;
+			ghostArray[x].y=0;
 			monster.x=0;
 			monster.y=1;
 		}
-		else if(i==1){
-			ghostArray[i].x=9;
-			ghostArray[i].y=9;
+		else if(x==1){
+			ghostArray[x].x=9;
+			ghostArray[x].y=9;
 		}
-		else if(i==2){
-			ghostArray[i].x=9;
-			ghostArray[i].y=0;
+		else if(x==2){
+			ghostArray[x].x=9;
+			ghostArray[x].y=0;
 		}
-		else if(i==3){
-			ghostArray[i].x=0;
-			ghostArray[i].y=9;
+		else if(x==3){
+			ghostArray[x].x=0;
+			ghostArray[x].y=9;
 		}
+	}else {
+			ghostArray[x].x=-1000;
+			ghostArray[x].y=-1000;
+		}
+
 	}
+
 }
 
 function Start() {
@@ -311,30 +343,17 @@ function Start() {
 			if (
 				(i == 1 && j == 1) ||
 				(i == 2 && j == 1) ||
-				(i == 4 && j == 1) ||
-				(i == 5 && j == 1) ||
-				(i == 6 && j == 1) ||
+
 				(i == 8 && j == 1) ||
 				(i == 9 && j == 1) ||
-				(i == 1 && j == 3) ||
+
 				(i == 3 && j == 3) ||
-				(i == 4 && j == 3) ||
 				(i == 6 && j == 3) ||
-				(i == 7 && j == 3) ||
+
 				(i == 9 && j == 3) ||
-				(i == 4 && j == 4) ||
-				(i == 4 && j == 5) ||
-				(i == 6 && j == 4) ||
+
 				(i == 6 && j == 5) ||
-				(i == 0 && j == 5) ||
-				(i == 9 && j == 5) ||
-				(i == 1 && j == 7) ||
-				(i == 2 && j == 7) ||
-				(i == 3 && j == 7) ||
-				(i == 2 && j == 8) ||
-				(i == 6 && j == 7) ||
-				(i == 7 && j == 7) ||
-				(i == 8 && j == 7) ||
+
 				(i == 7 && j == 8)
 			) {
 				board[i][j] = 4;
@@ -390,6 +409,7 @@ function Start() {
 		"keydown",
 		function(e) {
 			keysDown[e.keyCode] = true;
+			e.preventDefault();
 		},
 		false
 	);
@@ -397,6 +417,7 @@ function Start() {
 		"keyup",
 		function(e) {
 			keysDown[e.keyCode] = false;
+			e.preventDefault();
 		},
 		false
 	);
@@ -437,11 +458,11 @@ function GetKeyPressed() {
 		return 4;
 	}
 }
-
 function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	setting.monsters=4;
 	lblLives.value=lives;
 	lblUsername.value=username;
 	for (var i = 0; i < 10; i++) {
@@ -450,9 +471,9 @@ function Draw() {
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 			if((setting.monsters>0 && ghostArray[0].x==i &&ghostArray[0].y==j )||
-				(setting.monsters>1 && ghostArray[1].x==i &&ghostArray[1].y==j ) ||
+				(setting.monsters>1 && ghostArray[1].x==i &&ghostArray[1].y==j) ||
 				(setting.monsters>2 && ghostArray[2].x==i &&ghostArray[2].y==j) ||
-				(setting.monsters>2 && ghostArray[3].x==i &&ghostArray[3].y==j) ){
+				(setting.monsters>3 && ghostArray[3].x==i &&ghostArray[3].y==j) ){
 				context.beginPath();
 				let ghostImage=new Image();
 				ghostImage.src="resources/ghost.jpg";
@@ -586,129 +607,131 @@ function UpdatePosition() {
 			Draw();
 	}
 }
+
 function UpdateGhostPosition(){
-	for(let i=0;i<setting.monsters;i++){
-		if(ghostArray[i].x !=9 && checkIfWall(ghostArray[i].x+1,ghostArray[i].y ) && shape.i>ghostArray[i].x){
-			ghostArray[i].x=ghostArray[i].x+1;
+	for(let z=0;z<setting.monsters;z++) {
+		if (ghostArray[z].x < 9 && checkIfWall(ghostArray[z].x + 1, ghostArray[z].y) && shape.i > ghostArray[z].x &&
+			!checkIfGhostInThisPosition(ghostArray[z].x + 1, ghostArray[z].y)) {
+			ghostArray[z].x = ghostArray[z].x + 1;
 			checkPacman();
-		}else if (ghostArray[i].y !=0 && checkIfWall(ghostArray[i].x,ghostArray[i].y-1) && shape.j<ghostArray[i].y){
-			ghostArray[i].y=ghostArray[i].y-1;
+		} else if (ghostArray[z].y > 0 && checkIfWall(ghostArray[z].x, ghostArray[z].y - 1) && shape.j < ghostArray[z].y &&
+			!checkIfGhostInThisPosition(ghostArray[z].x, ghostArray[z].y - 1)) {
+			ghostArray[z].y = ghostArray[z].y - 1;
 			checkPacman();
-		}
-		else if (ghostArray[i].x !=0 && checkIfWall(ghostArray[i].x-1,ghostArray[i].y ) && shape.i<ghostArray[i].x){
-			ghostArray[i].x=ghostArray[i].x-1;
-			checkPacman();
-		}
-		else if(ghostArray[i].y !=9 && checkIfWall(ghostArray[i].x,ghostArray[i].y+1 ) && shape.j>ghostArray[i].y){
-			ghostArray[i].x=ghostArray[i].y+1;
-			checkPacman();
-		}
-	}
-}
-	function checkPacman() {
-		for(let i=0;i<setting.monsters;i++){
-			if(ghostArray[i].x==shape.i&&ghostArray[i].y==shape.j){
-				board[shape.i][shape.j] = 0;
-				score=score-10;
-				lives--;
-				let emptyCell=findRandomEmptyCell(board);
-				shape.i=emptyCell[0];
-				shape.j=emptyCell[1];
-				board[shape.i][shape.j] = 2;
-				CreateGhostsArray();
-				break;
+		} else if (ghostArray[z].y < 9 && checkIfWall(ghostArray[z].x, ghostArray[z].y + 1) && shape.j > ghostArray[z].y &&
+			!checkIfGhostInThisPosition(ghostArray[z].x, ghostArray[z].y + 1)) {
+			ghostArray[z].y = ghostArray[z].y + 1;
+						checkPacman();
+					}
+		else if (ghostArray[z].x >0 && checkIfWall(ghostArray[z].x-1, ghostArray[z].y ) && shape.i < ghostArray[z].y &&
+			!checkIfGhostInThisPosition(ghostArray[z].x-1, ghostArray[z].y)) {
+			ghostArray[z].y = ghostArray[z].x - 1;
+			checkPacman();}
+				}
 			}
-		}
-	}	
+			function checkPacman() {
+				for (let i = 0; i < setting.monsters; i++) {
+					if (ghostArray[i].x == shape.i && ghostArray[i].y == shape.j) {
+						board[shape.i][shape.j] = 0;
+						score = score - 10;
+						lives--;
+						let emptyCell = findRandomEmptyCell(board);
+						shape.i = emptyCell[0];
+						shape.j = emptyCell[1];
+						board[shape.i][shape.j] = 2;
+						CreateGhostsArray();
+						break;
+					}
+				}
+			}
+			function pacmanAngles() {
+				let angles = [];
+				if (angle == 1) {
+					angles[0] = 1.8;
+					angles[1] = 3.4;
+				} else if (angle == 2) {
+					angles[0] = 0.7;
+					angles[1] = 2.3;
+				} else if (angle == 3) {
+					angles[0] = 1.25;
+					angles[1] = 2.85;
+				} else {
+					angles[0] = 0.15;
+					angles[1] = 1.85;
+				}
+				return angles;
+			}
 
-	function pacmanAngles(){
-		let angles=[];
-		if(angle==1){
-			angles[0]=1.8
-			angles[1]=3.4
-		}
-		else if(angle==2){
-			angles[0]=0.7
-			angles[1]=2.3
-		}
-		else if(angle==3){
-			angles[0]=1.25
-			angles[1]=2.85
-		}
-		else{
-			angles[0]=0.15
-			angles[1]=1.85
-		}
-	return angles;
-	}
-$('#manual-ajax').click(function(event) {
-	event.preventDefault();
-	this.blur(); // Manually remove focus from clicked link.
-	$.get(this.href, function(html) {
-		$(html).appendTo('body').modal();
-	});
-});
+
+			function getRandomInt(max) {
+				return Math.floor(Math.random() * Math.floor(max));
+			}
+
+			function checkIfGhostInThisPosition(x, y, ghostnum) {
+				for (let k = 0; k < setting.monsters; k++) {
+					if (ghostnum != k && ghostArray[k].x == x && ghostArray[k].y == y)
+						return true;
+				}
+				return false;
+			}
 
 
-function getRandomInt(max) {
-	return Math.floor(Math.random() * Math.floor(max));
-}
+			function moveMonster() {
+				while (1) {
+					let random = getRandomInt(4);
+					if (random == 0 && checkIfWall(monster.x + 1, monster.y)) {
+						monster.x = monster.x + 1;
+						return;
+					}
+					if (random == 1 && checkIfWall(monster.x - 1, monster.y)) {
+						monster.x = monster.x - 1;
+						return;
+					}
+					if (random == 2 && checkIfWall(monster.x, monster.y + 1)) {
+						monster.y = monster.y + 1;
+						return;
+					}
+					if (random == 3 && checkIfWall(monster.x, monster.y - 1)) {
+						monster.y = monster.y - 1;
+						return;
+					}
+				}
+			}
 
-function moveMonster(){
-	while(1) {
-		let random = getRandomInt(4);
-		if (random == 0 && checkIfWall(monster.x + 1, monster.y)) {
-			monster.x = monster.x + 1;
-			return;
-		}
-		if (random == 1 && checkIfWall(monster.x - 1, monster.y)) {
-			monster.x = monster.x - 1;
-			return;
-		}
-		if (random == 2 && checkIfWall(monster.x, monster.y + 1)) {
-			monster.y = monster.y + 1;
-			return;
-		}
-		if (random == 3 && checkIfWall(monster.x, monster.y - 1)) {
-			monster.y = monster.y - 1;
-			return;
-		}
-	}
-}
+			function newGame() {
+				endGame();
+				Start();
+				lives = 5;
+				score = 0;
+			}
 
-function newGame(){
-	endGame();
-	Start();
-	lives=5;
-	score=0;
-}
+			function endGame() {
+				window.clearInterval(interval);
+				song.stop();
+			}
 
-function endGame() {
-	window.clearInterval(interval);
-	song.stop();
-}
+			function checkIfWall(i, j) {
+				if (i < 0 || i > 9 || j < 0 || j > 9)
+					return false;
+				if (board[i][j] !== 4) {
+					return true;
+				}
+				return false;
+			}
 
-function checkIfWall(i,j) {
-	if(i<0 ||i>9 ||j<0 || j>9)
-		return false;
-	if(board[i][j]!==4){
-		return true;
-	}
-	return false;
-}
+			function sound(src) {
+				this.sound = document.createElement("audio");
+				this.sound.src = src;
+				this.sound.loop = true;
+				this.sound.setAttribute("preload", "auto");
+				this.sound.setAttribute("controls", "none");
+				this.sound.style.display = "none";
+				document.body.appendChild(this.sound);
+				this.play = function () {
+					this.sound.play();
+				}
+				this.stop = function () {
+					this.sound.pause();
+				}
+			}
 
-function sound(src) {
-	this.sound = document.createElement("audio");
-	this.sound.src = src;
-	this.sound.loop=true;
-	this.sound.setAttribute("preload", "auto");
-	this.sound.setAttribute("controls", "none");
-	this.sound.style.display = "none";
-	document.body.appendChild(this.sound);
-	this.play = function(){
-		this.sound.play();
-	}
-	this.stop = function(){
-		this.sound.pause();
-	}
-}
