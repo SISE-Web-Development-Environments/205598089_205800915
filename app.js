@@ -20,6 +20,7 @@ var monster;
 var ateMonster;
 var lives;
 var song;
+var username;
 //hello aviel
 
 $(document).ready(function() {
@@ -247,6 +248,7 @@ function UserAndPassConfirm(){
 			//the user and password correct
 			$(document).ready(function(){
 				showSettings();
+				username=txtbox1.value;
 				alert(txtbox1.value+" Welcome , you have login succecsfully");
 				//$("plogin").append(" <b>"+txtbox1.value+" Welcome , you have login succecsfully</b>.");
 			});
@@ -441,6 +443,7 @@ function Draw() {
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblLives.value=lives;
+	lblUsername.value=username;
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
@@ -571,7 +574,12 @@ function UpdatePosition() {
 	}
 	else if(time_elapsed>=setting.time || lives==0){
 		endGame();
-		window.alert("Game completed");
+		if(lives==0)
+			window.alert("Loser!");
+		else if(score<100)
+			window.alert("You are better than "+score+" points!");
+		else
+			window.alert("Winner!!!");
 	}
 	else {
 
@@ -633,6 +641,13 @@ function UpdateGhostPosition(){
 		}
 	return angles;
 	}
+$('#manual-ajax').click(function(event) {
+	event.preventDefault();
+	this.blur(); // Manually remove focus from clicked link.
+	$.get(this.href, function(html) {
+		$(html).appendTo('body').modal();
+	});
+});
 
 
 function getRandomInt(max) {
