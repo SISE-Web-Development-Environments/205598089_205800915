@@ -22,7 +22,9 @@ var lives;
 var song;
 var username;
 var clock;
+var Power=new Object();
 var ateClock;
+var atePower;
 //hello aviel
 $(document).ready(function() {
 	showWelcome();
@@ -30,6 +32,7 @@ $(document).ready(function() {
 	localStorage.setItem('p', 'p');
 	ateMonster=false;
 	ateClock=false;
+	atePower=false;
 	song=new sound("resources/song.mp3");
 	lives=5;
 });
@@ -408,6 +411,13 @@ function Start() {
 	}
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
+		if(food_remain==2){
+			board[emptyCell[0]][emptyCell[1]] =8;
+			food_remain--;
+			Power.i=emptyCell[0];
+			Power.j=emptyCell[1];
+			break;
+		}
 		if(food_remain==1){
 			board[emptyCell[0]][emptyCell[1]] = 7;
 			food_remain--;
@@ -534,6 +544,12 @@ function Draw() {
 				let clockImage = new Image();
 				clockImage.src = "resources/clock.jpg";
 				context.drawImage(clockImage, center.x - 15, center.y - 15, 40, 40);
+			}else if(board[i][j]==8 &&atePower==false){
+				context.beginPath();
+				let clockImage = new Image();
+				clockImage.src = "resources/drug.jpg";
+				context.drawImage(clockImage, center.x - 15, center.y - 15, 40, 40);
+
 			}
 		}
 	}
@@ -553,6 +569,10 @@ function UpdatePosition() {
 				ateClock=true;
 				setting.time=setting.time+20;
 			}
+			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				atePower=true;
+				lives++;
+			}
 		}
 	}
 	if (x == 2) {
@@ -565,6 +585,7 @@ function UpdatePosition() {
 				ateClock=true;
 				setting.time=setting.time+20;
 			}
+
 		}
 	}
 	if (x == 3) {
@@ -576,6 +597,9 @@ function UpdatePosition() {
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				ateClock=true;
 				setting.time=setting.time+20;
+			}if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				atePower=true;
+				lives++;
 			}
 		}
 	}
@@ -588,6 +612,9 @@ function UpdatePosition() {
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				ateClock=true;
 				setting.time=setting.time+20;
+			}if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				atePower=true;
+				lives++;
 			}
 		}
 	}
