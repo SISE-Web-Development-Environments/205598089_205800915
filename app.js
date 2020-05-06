@@ -565,11 +565,7 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
-			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
-				ateClock=true;
-				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
-			}
-			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives=lives+1;
 			}
@@ -581,10 +577,6 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
-			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
-				ateClock=true;
-				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
-			}
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
@@ -597,10 +589,7 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
-			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
-				ateClock=true;
-				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
-			}
+
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
@@ -613,10 +602,6 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
-			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
-				ateClock=true;
-				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
-			}
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
@@ -635,25 +620,17 @@ function UpdatePosition() {
 	board[shape.i][shape.j] = 2;
 
 
+	if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false) {
+		ateClock = true;
+		start_time = start_time - 20;
+	}
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if(shape.i==monster.x&&shape.j==monster.y&&ateMonster==false){
 		ateMonster=true;
 		score=score+50;
 	}
-	// for(let i=0;i<setting.monsters;i++){
-	// 	if(ghostArray[i].x==shape.i&&ghostArray[i].y==shape.j){
-	// 		board[shape.i][shape.j] = 0;
-	// 		score=score-10;
-	// 		lives--;
-	// 		 let emptyCell=findRandomEmptyCell(board);
-	// 		 shape.i=emptyCell[0];
-	// 		 shape.j=emptyCell[1];
-	// 		board[shape.i][shape.j] = 2;
-	// 		 CreateGhostsArray();
-	// 		 break;
-	// 	}
-	// }
+
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
