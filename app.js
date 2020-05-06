@@ -377,12 +377,24 @@ function Start() {
 					let randfood = getRandomInt(3);
 					food_remain--;
 					if (randfood == 0) {
-						board[i][j] = 1;
-						junkfood--;
-					} else if (randfood == 1) {
-						board[i][j] = 5;
-						food--;
-					} else {
+						if(junkfood>0) {
+							if(junkfood==1)
+								board[i][j]=7;
+							else
+								board[i][j] = 1;
+							junkfood--;
+						}
+						else
+							randfood=1;
+
+					}  if (randfood == 1) {
+						if(food>0) {
+							board[i][j] = 5;
+							food--;
+						}
+						else
+							randfood=3;
+					}  {
 						board[i][j] = 6;
 						superfood--;
 					}
@@ -474,32 +486,29 @@ function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
-	setting.monsters=4;
-	lblLives.value=lives;
-	lblUsername.value=username;
+	setting.monsters = 4;
+	lblLives.value = lives;
+	lblUsername.value = username;
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-			if((setting.monsters>0 && ghostArray[0].x==i &&ghostArray[0].y==j )||
-				(setting.monsters>1 && ghostArray[1].x==i &&ghostArray[1].y==j) ||
-				(setting.monsters>2 && ghostArray[2].x==i &&ghostArray[2].y==j) ||
-				(setting.monsters>3 && ghostArray[3].x==i &&ghostArray[3].y==j) ){
+			if ((setting.monsters > 0 && ghostArray[0].x == i && ghostArray[0].y == j) ||
+				(setting.monsters > 1 && ghostArray[1].x == i && ghostArray[1].y == j) ||
+				(setting.monsters > 2 && ghostArray[2].x == i && ghostArray[2].y == j) ||
+				(setting.monsters > 3 && ghostArray[3].x == i && ghostArray[3].y == j)) {
 				context.beginPath();
-				let ghostImage=new Image();
-				ghostImage.src="resources/ghost.jpg";
-				context.drawImage(ghostImage,center.x-15,center.y-15,40,40);
-			}
-			else if(!ateMonster&&monster.x==i&&monster.y==j){
+				let ghostImage = new Image();
+				ghostImage.src = "resources/ghost.jpg";
+				context.drawImage(ghostImage, center.x - 15, center.y - 15, 40, 40);
+			} else if (!ateMonster && monster.x == i && monster.y == j) {
 				context.beginPath();
-				let monsterImage=new Image();
-				monsterImage.src="resources/monster.jpg";
-				context.drawImage(monsterImage,center.x-15,center.y-15,40,40);
-			}
-
-			else if (board[i][j] == 2) {
-				let angles=pacmanAngles();
+				let monsterImage = new Image();
+				monsterImage.src = "resources/monster.jpg";
+				context.drawImage(monsterImage, center.x - 15, center.y - 15, 40, 40);
+			} else if (board[i][j] == 2) {
+				let angles = pacmanAngles();
 				context.beginPath();
 				context.arc(center.x, center.y, 30, angles[0] * Math.PI, angles[1] * Math.PI); // half circle
 				context.lineTo(center.x, center.y);
@@ -519,18 +528,22 @@ function Draw() {
 				context.rect(center.x - 30, center.y - 30, 60, 60);
 				context.fillStyle = "grey"; //color of abstcile
 				context.fill();
+			} else if (board[i][j] == 5) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = setting.secondcolor; //color of the food
+				context.fill();
+			} else if (board[i][j] == 6) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = setting.thirdcolor; //color of the food
+				context.fill();
+			} else if (board[i][j] == 7) {
+				context.beginPath();
+				let monsterImage = new Image();
+				monsterImage.src = "resources/clock.jpg";
+				context.drawImage(monsterImage, center.x - 15, center.y - 15, 40, 40);
 			}
-			else if (board[i][j] == 5) {
-			context.beginPath();
-			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-			context.fillStyle = setting.secondcolor; //color of the food
-			context.fill();
-		}else if (board[i][j] == 6) {
-			context.beginPath();
-			context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-			context.fillStyle = setting.thirdcolor; //color of the food
-			context.fill();
-		}
 		}
 	}
 }
