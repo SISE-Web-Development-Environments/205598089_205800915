@@ -30,18 +30,32 @@ $(document).ready(function() {
 	song=new sound("resources/song.mp3");
 	lives=5;
 });
+function CheckArrow(x){
+	return x>=37 &&x<=40;
+}
 
 function KeyPressedDetective(event,a) {
 	var x  = event.which|| event.keyCode;
 	document.getElementById("result").innerHTML = "The Unicode value is: " + x;
-	if(a==0)
-		setting.right=x;
-	else if(a==1)
-		setting.left=x;
-	else if(a==2)
-		setting.down=x;
+	if(a==0) {
+		setting.right = x;
+		if(CheckArrow(x)){
+			$('#right').val(getStringFromKeyCode(x));
+		}
+	}
+	else if(a==1) {
+		setting.left = x;
+		if(CheckArrow(x)){
+			$('#left').val(getStringFromKeyCode(x));
+		}
+	}
+	else if(a==2) {
+		setting.down = x;
+		$('#down').val(getStringFromKeyCode(x));
+	}
 	else{
 		setting.up=x;
+		$('#up').val(getStringFromKeyCode(x));
 	}
 }
 function getStringFromKeyCode(num){
@@ -324,16 +338,16 @@ function Start() {
 	score = 0;
 	pac_color = "yellow";
 	CreateGhostsArray();
-	song.play();
+	//song.play();
 	var cnt = 100;
 	var food_remain = setting.balls;
-	var junkfood=Math.round(food_remain*60/100);
-	var food=Math.round(food_remain*30/100);
-	var superfood=Math.round(food_remain*10/100);
+	var junkfood = Math.round(food_remain * 60 / 100);
+	var food = Math.round(food_remain * 30 / 100);
+	var superfood = Math.round(food_remain * 10 / 100);
 	var pacman_remain = 1;
-	while(junkfood+superfood+food>food_remain)
+	while (junkfood + superfood + food > food_remain)
 		junkfood--;
-	while(junkfood+superfood+food<food_remain)
+	while (junkfood + superfood + food < food_remain)
 		junkfood++;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -357,25 +371,23 @@ function Start() {
 				(i == 7 && j == 8)
 			) {
 				board[i][j] = 4;
-			} else{
+			} else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
-					let randfood=getRandomInt(3);
+					let randfood = getRandomInt(3);
 					food_remain--;
-					if(randfood==0) {
+					if (randfood == 0) {
 						board[i][j] = 1;
 						junkfood--;
-					}
-					else if (randfood==1){
+					} else if (randfood == 1) {
 						board[i][j] = 5;
 						food--;
-					}
-					else{
+					} else {
 						board[i][j] = 6;
 						superfood--;
 					}
 				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
-					if((i!=9&&j!=9)||(i!=0&&j!=0)||(i!=0&&j!=9)||(i!=9&&j!=0)) {
+					if ((i != 9 && j != 9) || (i != 0 && j != 0) || (i != 0 && j != 9) || (i != 9 && j != 0)) {
 						shape.i = i;
 						shape.j = j;
 						pacman_remain--;
@@ -390,15 +402,13 @@ function Start() {
 	}
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
-		if(junkfood>0) {
+		if (junkfood > 0) {
 			board[emptyCell[0]][emptyCell[1]] = 1;
 			junkfood--;
-		}
-		else if(food>0) {
+		} else if (food > 0) {
 			board[emptyCell[0]][emptyCell[1]] = 5;
 			food--;
-		}
-		else if(superfood>0) {
+		} else if (superfood > 0) {
 			board[emptyCell[0]][emptyCell[1]] = 6;
 			superfood--;
 		}
@@ -407,7 +417,7 @@ function Start() {
 	keysDown = {};
 	addEventListener(
 		"keydown",
-		function(e) {
+		function (e) {
 			keysDown[e.keyCode] = true;
 			e.preventDefault();
 		},
@@ -415,7 +425,7 @@ function Start() {
 	);
 	addEventListener(
 		"keyup",
-		function(e) {
+		function (e) {
 			keysDown[e.keyCode] = false;
 			e.preventDefault();
 		},
@@ -423,6 +433,8 @@ function Start() {
 	);
 	interval = setInterval(UpdatePosition, 250);
 }
+
+
 
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
@@ -740,6 +752,20 @@ function UpdateGhostPosition(){
 				var modal= document.getElementById("About");
 				modal.style.display="none";
 			}
+function randommateSetting(){
+
+}
+function randomOneToFour(){
+	return Math.floor(Math.random() * 4) + 1;
+}
+function getRandomColor() {
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
 
 			function randomBallNumber(){
 				return getRandomInt(41)+50;
