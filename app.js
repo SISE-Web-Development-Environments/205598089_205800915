@@ -352,10 +352,7 @@ function Start() {
 	var food = Math.round(food_remain * 30 / 100);
 	var superfood = Math.round(food_remain * 10 / 100);
 	var pacman_remain = 1;
-	while (junkfood + superfood + food > food_remain)
-		junkfood--;
-	while (junkfood + superfood + food < food_remain)
-		junkfood++;
+
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
@@ -363,13 +360,10 @@ function Start() {
 		for (var j = 0; j < 10; j++) {
 			if (
 				(i == 1 && j == 1) ||
-				(i == 2 && j == 1) ||
 
 				(i == 8 && j == 1) ||
-				(i == 9 && j == 1) ||
 
 				(i == 3 && j == 3) ||
-				(i == 6 && j == 3) ||
 
 				(i == 9 && j == 3) ||
 
@@ -381,17 +375,15 @@ function Start() {
 			} else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
-					let randfood = getRandomInt(3);
+					let randfood = getUpdatedRandom(superfood,junkfood,food);
 					food_remain--;
 					if (randfood == 0) {
-
-								board[i][j] = 1;
+							board[i][j] = 1;
 							junkfood--;
-
-					} else if (randfood == 1) {
+					} else if (randfood == 1 ) {
 							board[i][j] = 5;
 							food--;
-					} else if(randfood==2) {
+					} else if(randfood==2 ) {
 						board[i][j] = 6;
 						superfood--;
 					}
@@ -454,7 +446,32 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 250);
+	interval = setInterval(UpdatePosition, 800);
+}
+function getUpdatedRandom(sfood,jfood,ffood){//0 junk food , 1food  , 2 superfood
+	if(jfood==0 && ffood==0)
+		return 2;
+	if(jfood==0 && sfood==0)
+		return 1;
+	if(sfood==0 &&ffood ==0)
+		return 0;
+	if(sfood==0){
+		return foodchecker(2);
+	}
+	if(ffood==0){
+		return foodchecker(1);
+	}
+	if(jfood==0){
+		return foodchecker(0);
+	}
+	return getRandomInt(3);
+}
+function foodchecker(val){
+	let result=getRandomInt(3);
+	while(result==val){
+		result=getRandomInt(3);
+	}
+	return result;
 }
 
 
@@ -462,7 +479,7 @@ function Start() {
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0 && i<=9 && j<=9 ) {
+	while (board[i][j] != 0 && i<=9 && j<=9 && ((i != 9 && j != 9) && (i != 0 && j != 0) && (i != 0 && j != 9) && (i != 9 && j != 0))) {
 		i = Math.floor(Math.random() * 9 + 1);
 		j = Math.floor(Math.random() * 9 + 1);
 	}
@@ -563,7 +580,6 @@ function UpdatePosition() {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
 			angle=x;
-			UpdateGhostPosition();
 			moveMonster();
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
@@ -575,7 +591,6 @@ function UpdatePosition() {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 			angle=x;
-			UpdateGhostPosition();
 			moveMonster();
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
@@ -587,7 +602,7 @@ function UpdatePosition() {
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 			angle=x;
-			UpdateGhostPosition();
+
 			moveMonster();
 
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
@@ -600,7 +615,7 @@ function UpdatePosition() {
 		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 			angle=x;
-			UpdateGhostPosition();
+
 			moveMonster();
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
@@ -618,11 +633,11 @@ function UpdatePosition() {
 		score=score+25;
 	}
 	board[shape.i][shape.j] = 2;
-
+	UpdateGhostPosition();
 
 	if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false) {
 		ateClock = true;
-		start_time = start_time - 20;
+		start_time.setSeconds(start_time.getSeconds() +20);
 	}
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
