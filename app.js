@@ -749,3 +749,7 @@ function UpdateGhostPosition(){
 				return getRandomInt(10000)+60;
 			}
 
+			function randomGhostsNumber() {
+				return getRandomInt(4)+1;
+			}
+
