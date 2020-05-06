@@ -20,8 +20,10 @@ er-handle { border-color: #729fcf; }
 ndle { border-color: #729fcf; }
 
 #footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 2.5rem;            /* Footer height */
+    position:absolute;
+    bottom:-300px;
+    width:100%;
+    height:60px;   /* Height of the footer */
+    background:#6cf;
 }
+

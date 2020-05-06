@@ -377,16 +377,14 @@ function Start() {
 					let randfood = getRandomInt(3);
 					food_remain--;
 					if (randfood == 0) {
-							if(junkfood==1)
-								board[i][j]=7;
-							else
+
 								board[i][j] = 1;
 							junkfood--;
 
-					}  if (randfood == 1) {
+					} else if (randfood == 1) {
 							board[i][j] = 5;
 							food--;
-					} if(randfood==3) {
+					} else if(randfood==2) {
 						board[i][j] = 6;
 						superfood--;
 					}
@@ -406,6 +404,11 @@ function Start() {
 	}
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
+		if(food_remain==1){
+			board[emptyCell[0]][emptyCell[1]] = 7;
+			food_remain--;
+			break;
+		}
 		if (junkfood > 0) {
 			board[emptyCell[0]][emptyCell[1]] = 1;
 			junkfood--;
@@ -533,7 +536,7 @@ function Draw() {
 			} else if (board[i][j] == 7) {
 				context.beginPath();
 				let clockImage = new Image();
-				monsterImage.src = "resources/clock.jpg";
+				clockImage.src = "resources/clock.jpg";
 				context.drawImage(clockImage, center.x - 15, center.y - 15, 40, 40);
 			}
 		}
