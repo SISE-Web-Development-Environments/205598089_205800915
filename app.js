@@ -416,7 +416,7 @@ function Start() {
 			food_remain--;
 			Power.i=emptyCell[0];
 			Power.j=emptyCell[1];
-			break;
+			continue;
 		}
 		if(food_remain==1){
 			board[emptyCell[0]][emptyCell[1]] = 7;
@@ -571,7 +571,7 @@ function UpdatePosition() {
 			}
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				atePower=true;
-				lives++;
+				lives=lives+1;
 			}
 		}
 	}
@@ -585,7 +585,10 @@ function UpdatePosition() {
 				ateClock=true;
 				setting.time=setting.time+20;
 			}
-
+			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				atePower=true;
+				lives++;
+			}
 		}
 	}
 	if (x == 3) {
