@@ -753,3 +753,18 @@ function UpdateGhostPosition(){
 				return getRandomInt(4)+1;
 			}
 
+			function RandomKeyCode() {
+				let numbers=getRandomInt(10)+48;
+				let letters=getRandomInt(26)+65;
+				let arrows=getRandomInt(4)+37;
+				let randomChooser=getRandomInt(3);
+
+				if(randomChooser==0)
+					return numbers;
+				if(randomChooser==1)
+					return letters;
+				if(randomChooser==2)
+					return arrows;
+
+			}
+
