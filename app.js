@@ -377,24 +377,16 @@ function Start() {
 					let randfood = getRandomInt(3);
 					food_remain--;
 					if (randfood == 0) {
-						if(junkfood>0) {
 							if(junkfood==1)
 								board[i][j]=7;
 							else
 								board[i][j] = 1;
 							junkfood--;
-						}
-						else
-							randfood=1;
 
 					}  if (randfood == 1) {
-						if(food>0) {
 							board[i][j] = 5;
 							food--;
-						}
-						else
-							randfood=3;
-					}  {
+					} if(randfood==3) {
 						board[i][j] = 6;
 						superfood--;
 					}
@@ -540,9 +532,9 @@ function Draw() {
 				context.fill();
 			} else if (board[i][j] == 7) {
 				context.beginPath();
-				let monsterImage = new Image();
+				let clockImage = new Image();
 				monsterImage.src = "resources/clock.jpg";
-				context.drawImage(monsterImage, center.x - 15, center.y - 15, 40, 40);
+				context.drawImage(clockImage, center.x - 15, center.y - 15, 40, 40);
 			}
 		}
 	}
