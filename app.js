@@ -735,13 +735,17 @@ function UpdateGhostPosition(){
 				}
 			}
 
-			function openModal() {
-				var modal= document.getElementById("About");
-				modal.style.display="block";
-			}
 
 			function closeModal() {
 				var modal= document.getElementById("About");
 				modal.style.display="none";
+			}
+
+			function randomBallNumber(){
+				return getRandomInt(41)+50;
+			}
+
+			function randomTime(){
+				return getRandomInt(10000)+60;
 			}
 
