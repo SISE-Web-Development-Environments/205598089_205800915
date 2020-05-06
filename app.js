@@ -642,20 +642,20 @@ function UpdatePosition() {
 
 function UpdateGhostPosition(){
 	for(let z=0;z<setting.monsters;z++) {
-		if (ghostArray[z].x < 9 && board[ghostArray[z].x + 1, ghostArray[z].y]!=4 && shape.i > ghostArray[z].x &&
+		if (ghostArray[z].x < 9 && board[ghostArray[z].x + 1] [ghostArray[z].y]!=4 && shape.i > ghostArray[z].x &&
 			!checkIfGhostInThisPosition(ghostArray[z].x + 1, ghostArray[z].y)) {
 			ghostArray[z].x = ghostArray[z].x + 1;
 			checkPacman();
-		} else if (ghostArray[z].y > 0 && board[ghostArray[z].x, ghostArray[z].y - 1]!=4 && shape.j < ghostArray[z].y &&
+		} else if (ghostArray[z].y > 0 && board[ghostArray[z].x] [ghostArray[z].y - 1]!=4 && shape.j < ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x, ghostArray[z].y - 1)) {
 			ghostArray[z].y = ghostArray[z].y - 1;
 			checkPacman();
-		} else if (ghostArray[z].y < 9 && board[ghostArray[z].x, ghostArray[z].y + 1]!=4 && shape.j > ghostArray[z].y &&
+		} else if (ghostArray[z].y < 9 && board[ghostArray[z].x] [ghostArray[z].y + 1]!=4 && shape.j > ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x, ghostArray[z].y + 1)) {
 			ghostArray[z].y = ghostArray[z].y + 1;
 						checkPacman();
 					}
-		else if (ghostArray[z].x >0 && board[ghostArray[z].x-1, ghostArray[z].y]!=4 && shape.i < ghostArray[z].y &&
+		else if (ghostArray[z].x >0 && board[ghostArray[z].x-1] [ghostArray[z].y]!=4 && shape.i < ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x-1, ghostArray[z].y)) {
 			ghostArray[z].y = ghostArray[z].x - 1;
 			checkPacman();}
