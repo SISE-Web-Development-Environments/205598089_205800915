@@ -567,7 +567,7 @@ function UpdatePosition() {
 			moveMonster();
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				ateClock=true;
-				setting.time=setting.time+20;
+				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
 			}
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				atePower=true;
@@ -583,9 +583,9 @@ function UpdatePosition() {
 			moveMonster();
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				ateClock=true;
-				setting.time=setting.time+20;
+				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
 			}
-			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
 			}
@@ -599,8 +599,9 @@ function UpdatePosition() {
 			moveMonster();
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				ateClock=true;
-				setting.time=setting.time+20;
-			}if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
+			}
+			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
 			}
@@ -614,8 +615,9 @@ function UpdatePosition() {
 			moveMonster();
 			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
 				ateClock=true;
-				setting.time=setting.time+20;
-			}if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				time_elapsed.setSeconds(time_elapsed.getSeconds()-20);
+			}
+			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
 			}
@@ -725,6 +727,10 @@ function UpdateGhostPosition(){
 					angles[1] = 1.85;
 				}
 				return angles;
+			}
+			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
+				atePower=true;
+				lives++;
 			}
 
 
