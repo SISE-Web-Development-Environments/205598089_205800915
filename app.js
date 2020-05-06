@@ -239,7 +239,9 @@ function showLogin(){
 function showWelcome(){
 	hideAllDivs();
 	welcome=document.getElementById("welcome");
+	let c=document.getElementById("buttons");
 	welcome.style.display='block';
+	c.style.display='block';
 }
 
 function showAbout() {

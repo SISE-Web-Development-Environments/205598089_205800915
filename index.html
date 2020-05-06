@@ -9,19 +9,19 @@
 	<link rel="stylesheet" type="text/css" href="style.css"  />
 </head>
 <body>
-<header>
+<header id="header">
 	<picture id="logo">
-		<img width="100px" height="100px" src="https://i.ytimg.com/vi/tMoJ4kLoAd8/maxresdefault.jpg">
+		<img width="500px" height="100px" src="resources/logo.png">
 	</picture>
 	<h1 style="text-align:center">Pacman App Aviel Avitan Ron Shakutai</h1>
 </header>
 
 
 <div id="menu" class="menu">
-	<a href="javascript:showWelcome()">Welcome</a>-
-	<a href="javascript:showRegistration()">Register </a>-
-	<a href="javascript:showLogin()">Login</a>-
-	<a href="#About" rel="modal:open">About</a>
+	<a class="refs" href="javascript:showWelcome()">Welcome</a>-
+	<a class="refs" href="javascript:showRegistration()">Register </a>-
+	<a class="refs" href="javascript:showLogin()">Login</a>-
+	<a class="refs" href="#About" rel="modal:open">About</a>
 </div>
 
 <div id="About" class="modal">
@@ -35,8 +35,10 @@
 
 
 <div id="welcome">
+	<div id="buttons">
 	<button id="registrationButton" class="button" onclick="showRegistration()">Register</button>
 	<button id="loginButton" class="button" onclick="showLogin()">Login</button>
+	</div>
 	<br><br>
 	<br><br>
 	<br><br>
@@ -60,6 +62,7 @@
 		</fieldset>
 	</form>
 </div>
+
 <div id="login" >
 	<login>
 		User-Name : <input type="text" id="txtbox1"/>
