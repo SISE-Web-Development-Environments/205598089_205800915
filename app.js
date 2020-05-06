@@ -753,7 +753,28 @@ function UpdateGhostPosition(){
 				modal.style.display="none";
 			}
 function randommateSetting(){
-
+ setting.monsters=randomOneToFour();
+ setting.firstcolor=getRandomColor();
+ setting.secondcolor=getRandomColor();
+ setting.thirdcolor=getRandomColor();
+ setting.balls=randomBallNumber();
+ setting.time=randomTime();
+ setting.left=RandomKeyCode();
+ setting.right=RandomKeyCode();
+ while(setting.left==setting.right){
+	 setting.right=RandomKeyCode();
+ }
+ setting.down=RandomKeyCode();
+ while (setting.left == setting.down || setting.right == setting.down){
+ 	setting.down=RandomKeyCode();
+ }
+ setting.up=RandomKeyCode();
+ while (setting.up==setting.down ||setting.up==setting.left || setting.up==setting.right) {
+	 setting.up = RandomKeyCode();
+ }
+ UpdateStaticSetting();
+	Start();
+	showGame();
 }
 function randomOneToFour(){
 	return Math.floor(Math.random() * 4) + 1;
@@ -772,12 +793,9 @@ function getRandomColor() {
 			}
 
 			function randomTime(){
-				return getRandomInt(10000)+60;
+				return getRandomInt(80000)+60;
 			}
 
-			function randomGhostsNumber() {
-				return getRandomInt(4)+1;
-			}
 
 			function RandomKeyCode() {
 				let numbers=getRandomInt(10)+48;
