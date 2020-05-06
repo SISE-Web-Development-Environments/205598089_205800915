@@ -325,8 +325,8 @@ function CreateGhostsArray(){
 			ghostArray[x].y=9;
 		}
 	}else {
-			ghostArray[x].x=-1000;
-			ghostArray[x].y=-1000;
+			ghostArray[x].x=-100000;
+			ghostArray[x].y=-100000;
 		}
 
 	}
@@ -446,7 +446,7 @@ function Start() {
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0 ) {
+	while (board[i][j] != 0 && i<=9 && j<=9 ) {
 		i = Math.floor(Math.random() * 9 + 1);
 		j = Math.floor(Math.random() * 9 + 1);
 	}
@@ -481,7 +481,6 @@ function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
-	setting.monsters = 4;
 	lblLives.value = lives;
 	lblUsername.value = username;
 	for (var i = 0; i < 10; i++) {
@@ -630,20 +629,20 @@ function UpdatePosition() {
 
 function UpdateGhostPosition(){
 	for(let z=0;z<setting.monsters;z++) {
-		if (ghostArray[z].x < 9 && checkIfWall(ghostArray[z].x + 1, ghostArray[z].y) && shape.i > ghostArray[z].x &&
+		if (ghostArray[z].x < 9 && board[ghostArray[z].x + 1, ghostArray[z].y]!=4 && shape.i > ghostArray[z].x &&
 			!checkIfGhostInThisPosition(ghostArray[z].x + 1, ghostArray[z].y)) {
 			ghostArray[z].x = ghostArray[z].x + 1;
 			checkPacman();
-		} else if (ghostArray[z].y > 0 && checkIfWall(ghostArray[z].x, ghostArray[z].y - 1) && shape.j < ghostArray[z].y &&
+		} else if (ghostArray[z].y > 0 && board[ghostArray[z].x, ghostArray[z].y - 1]!=4 && shape.j < ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x, ghostArray[z].y - 1)) {
 			ghostArray[z].y = ghostArray[z].y - 1;
 			checkPacman();
-		} else if (ghostArray[z].y < 9 && checkIfWall(ghostArray[z].x, ghostArray[z].y + 1) && shape.j > ghostArray[z].y &&
+		} else if (ghostArray[z].y < 9 && board[ghostArray[z].x, ghostArray[z].y + 1]!=4 && shape.j > ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x, ghostArray[z].y + 1)) {
 			ghostArray[z].y = ghostArray[z].y + 1;
 						checkPacman();
 					}
-		else if (ghostArray[z].x >0 && checkIfWall(ghostArray[z].x-1, ghostArray[z].y ) && shape.i < ghostArray[z].y &&
+		else if (ghostArray[z].x >0 && board[ghostArray[z].x-1, ghostArray[z].y]!=4 && shape.i < ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x-1, ghostArray[z].y)) {
 			ghostArray[z].y = ghostArray[z].x - 1;
 			checkPacman();}
