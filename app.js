@@ -735,3 +735,13 @@ function UpdateGhostPosition(){
 				}
 			}
 
+			function openModal() {
+				var modal= document.getElementById("About");
+				modal.style.display="block";
+			}
+
+			function closeModal() {
+				var modal= document.getElementById("About");
+				modal.style.display="none";
+			}
+

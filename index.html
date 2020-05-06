@@ -4,6 +4,8 @@
 	<title>Pacman Website</title>
 	<script src="./jquery-3.4.1.slim.min.js"></script>
 	<script type="text/javascript" src="./app.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<link rel="stylesheet" type="text/css" href="style.css"  />
 </head>
 <body>
@@ -19,8 +21,18 @@
 	<a href="javascript:showWelcome()">Welcome</a>-
 	<a href="javascript:showRegistration()">Register </a>-
 	<a href="javascript:showLogin()">Login</a>-
-	<a href="ajax.html" id="manual-ajax">About</a>
+	<a href="#About" rel="modal:open">About</a>
 </div>
+
+<div id="About" class="modal">
+	<h3>Students names:Ron Shakutai, Aviel Avitan</h3>
+	<p>We used the jquery plugin for modal dialog and for form validation process.</p>
+	<p>We struggled with updating pacman after a ghost catches him.</p>
+	<p>We also struggled with making the game work with full board, 90 pills and 4 ghosts while generating walls.</p>
+	<a href="javascript:closeModal()" rel="modal:close">Close</a>
+</div>
+
+
 
 <div id="welcome">
 	<button id="registrationButton" onclick="showRegistration()">Register</button>
