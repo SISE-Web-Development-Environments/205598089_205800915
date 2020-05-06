@@ -658,7 +658,10 @@ function UpdateGhostPosition(){
 		else if (ghostArray[z].x >0 && board[ghostArray[z].x-1] [ghostArray[z].y]!=4 && shape.i < ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x-1, ghostArray[z].y)) {
 			ghostArray[z].y = ghostArray[z].x - 1;
-			checkPacman();}
+			checkPacman();
+		}
+		else
+			moveGhost(ghostArray[z]);
 				}
 			}
 			function checkPacman() {
@@ -729,6 +732,28 @@ function UpdateGhostPosition(){
 					}
 				}
 			}
+
+function moveGhost(ghost) {
+	while (1) {
+		let random = getRandomInt(4);
+		if (random == 0 && checkIfWall(ghost.x + 1, ghost.y)) {
+			ghost.x = ghost.x + 1;
+			return;
+		}
+		if (random == 1 && checkIfWall(ghost.x - 1, ghost.y)) {
+			ghost.x = ghost.x - 1;
+			return;
+		}
+		if (random == 2 && checkIfWall(ghost.x, ghost.y + 1)) {
+			ghost.y = ghost.y + 1;
+			return;
+		}
+		if (random == 3 && checkIfWall(ghost.x, ghost.y - 1)) {
+			ghost.y = ghost.y - 1;
+			return;
+		}
+	}
+}
 
 			function newGame() {
 				endGame();
