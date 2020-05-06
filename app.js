@@ -21,12 +21,15 @@ var ateMonster;
 var lives;
 var song;
 var username;
+var clock;
+var ateClock;
 //hello aviel
 $(document).ready(function() {
 	showWelcome();
 	context = canvas.getContext("2d");
 	localStorage.setItem('p', 'p');
 	ateMonster=false;
+	ateClock=false;
 	song=new sound("resources/song.mp3");
 	lives=5;
 });
@@ -337,6 +340,7 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
+	clock=new Object();
 	CreateGhostsArray();
 	//song.play();
 	var cnt = 100;
@@ -407,6 +411,8 @@ function Start() {
 		if(food_remain==1){
 			board[emptyCell[0]][emptyCell[1]] = 7;
 			food_remain--;
+			clock.i=emptyCell[0];
+			clock.j=emptyCell[1];
 			break;
 		}
 		if (junkfood > 0) {
@@ -453,15 +459,6 @@ function findRandomEmptyCell(board) {
 	return [i, j];
 }
 
-function findRandomFoodCell(board) {
-	var i = Math.floor(Math.random() * 9 + 1);
-	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0 ||board[i][j]!=4) {
-		i = Math.floor(Math.random() * 9 + 1);
-		j = Math.floor(Math.random() * 9 + 1);
-	}
-	return [i, j];
-}
 
 function GetKeyPressed() {
 	if (keysDown[setting.up]) {
@@ -532,7 +529,7 @@ function Draw() {
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = setting.thirdcolor; //color of the food
 				context.fill();
-			} else if (board[i][j] == 7) {
+			} else if (board[i][j] == 7 &&ateClock==false) {
 				context.beginPath();
 				let clockImage = new Image();
 				clockImage.src = "resources/clock.jpg";
@@ -552,6 +549,10 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
+			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				ateClock=true;
+				setting.time=setting.time+20;
+			}
 		}
 	}
 	if (x == 2) {
@@ -560,6 +561,10 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
+			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				ateClock=true;
+				setting.time=setting.time+20;
+			}
 		}
 	}
 	if (x == 3) {
@@ -568,6 +573,10 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
+			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				ateClock=true;
+				setting.time=setting.time+20;
+			}
 		}
 	}
 	if (x == 4) {
@@ -576,6 +585,10 @@ function UpdatePosition() {
 			angle=x;
 			UpdateGhostPosition();
 			moveMonster();
+			if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false){
+				ateClock=true;
+				setting.time=setting.time+20;
+			}
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
