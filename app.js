@@ -635,7 +635,7 @@ function UpdatePosition() {
 		score=score+25;
 	}
 	board[shape.i][shape.j] = 2;
-	UpdateGhostPosition();
+	positions();
 
 	if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false) {
 		ateClock = true;
@@ -887,3 +887,71 @@ function getRandomColor() {
 
 			}
 
+
+			function positions() {
+				let distances=new Array();
+				let bestMove=0;
+				let dis=0;
+				for(let i=0;i<setting.monsters;i++){
+					if(checkIfWall(ghostArray[i].x+1,ghostArray[i].y)&& !checkIfGhostInThisPosition(ghostArray[i].x+1,ghostArray[i].y,i)){
+						distances.push(distance(ghostArray[i].x+1,shape.i,ghostArray[i].y,shape.j));
+					}
+					else{
+						distances.push(500);
+					}
+					if(checkIfWall(ghostArray[i].x-1,ghostArray[i].y)&& !checkIfGhostInThisPosition(ghostArray[i].x-1,ghostArray[i].y,i)){
+						distances.push(distance(ghostArray[i].x-1,shape.i,ghostArray[i].y,shape.j));
+					}
+					else{
+						distances.push(500);
+					}
+					if(checkIfWall(ghostArray[i].x,ghostArray[i].y+1)&& !checkIfGhostInThisPosition(ghostArray[i].x,ghostArray[i].y+1,i)){
+						distances.push(distance(ghostArray[i].x,shape.i,ghostArray[i].y+1,shape.j));
+					}
+					else{
+						distances.push(500);
+					}
+					if(checkIfWall(ghostArray[i].x,ghostArray[i].y-1)&& !checkIfGhostInThisPosition(ghostArray[i].x,ghostArray[i].y-1,i)){
+						distances.push(distance(ghostArray[i].x,shape.i,ghostArray[i].y-1,shape.j));
+					}
+					else{
+						distances.push(500);
+					}
+					let isMove=false;
+					for(let k=0;k<4;k++){
+						if(distances[k]!=500)
+							isMove=true;
+					}
+					if(!isMove)
+						continue;
+					dis=distances[0];
+					for(let j=0;j<distances.length;j++){
+						if(distances[j]<dis){
+							dis=distances[j];
+							bestMove=j;
+						}
+					}
+					distances=new Array();
+					if(bestMove==0){
+						ghostArray[i].x=ghostArray[i].x+1;
+					}
+					if(bestMove==1){
+						ghostArray[i].x=ghostArray[i].x-1;
+					}
+					if(bestMove==2){
+						ghostArray[i].y=ghostArray[i].y+1;
+					}
+					if(bestMove==3){
+						ghostArray[i].y=ghostArray[i].y-1;
+					}
+					bestMove=0;
+					checkPacman();
+				}
+			}
+
+			function distance(x1,x2,y1,y2) {
+				var a = x1 - x2;
+				var b = y1 - y2;
+
+				return  Math.sqrt( a*a + b*b );
+			}
