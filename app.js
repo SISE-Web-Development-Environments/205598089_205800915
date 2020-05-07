@@ -13,6 +13,7 @@ var login;
 var setting =new Object();
 var modal;
 var angle;
+var interval2;
 var game;
 var settingsDisplay;
 var ghostArray;
@@ -435,6 +436,7 @@ function Start() {
 	addEventListener(
 		"keydown",
 		function (e) {
+			UpdatePosition();
 			keysDown[e.keyCode] = true;
 			e.preventDefault();
 		},
@@ -443,12 +445,15 @@ function Start() {
 	addEventListener(
 		"keyup",
 		function (e) {
+			UpdatePosition();
 			keysDown[e.keyCode] = false;
 			e.preventDefault();
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 800);
+	interval =setInterval(UpdatePosition,700);
+	interval2 = setInterval(positions, 900);
+
 }
 function getUpdatedRandom(sfood,jfood,ffood){//0 junk food , 1food  , 2 superfood
 	if(jfood==0 && ffood==0)
@@ -582,7 +587,7 @@ function UpdatePosition() {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
 			angle=x;
-			moveMonster();
+
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives=lives+1;
@@ -593,7 +598,7 @@ function UpdatePosition() {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 			angle=x;
-			moveMonster();
+
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
@@ -605,7 +610,7 @@ function UpdatePosition() {
 			shape.i--;
 			angle=x;
 
-			moveMonster();
+
 
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
@@ -618,7 +623,6 @@ function UpdatePosition() {
 			shape.i++;
 			angle=x;
 
-			moveMonster();
 			if(shape.i==Power.i&&shape.j==Power.j &&atePower==false){
 				atePower=true;
 				lives++;
@@ -635,7 +639,6 @@ function UpdatePosition() {
 		score=score+25;
 	}
 	board[shape.i][shape.j] = 2;
-	positions();
 
 	if(shape.i==clock.i&&shape.j==clock.j &&ateClock==false) {
 		ateClock = true;
@@ -665,6 +668,18 @@ function UpdatePosition() {
 			Draw();
 	}
 }
+function UpdateGhostPosition(){
+	for(let i=0;i<setting.monsters;i++){
+
+	}
+
+
+
+}
+function findDistance(ghost){
+
+}
+
 
 function UpdateGhostPosition(){
 	for(let z=0;z<setting.monsters;z++) {
@@ -672,6 +687,7 @@ function UpdateGhostPosition(){
 			!checkIfGhostInThisPosition(ghostArray[z].x + 1, ghostArray[z].y)) {
 			ghostArray[z].x = ghostArray[z].x + 1;
 			checkPacman();
+
 		} else if (ghostArray[z].y > 0 && board[ghostArray[z].x] [ghostArray[z].y - 1]!=4 && shape.j < ghostArray[z].y &&
 			!checkIfGhostInThisPosition(ghostArray[z].x, ghostArray[z].y - 1)) {
 			ghostArray[z].y = ghostArray[z].y - 1;
@@ -681,9 +697,9 @@ function UpdateGhostPosition(){
 			ghostArray[z].y = ghostArray[z].y + 1;
 						checkPacman();
 					}
-		else if (ghostArray[z].x >0 && board[ghostArray[z].x-1] [ghostArray[z].y]!=4 && shape.i < ghostArray[z].y &&
+		else if (ghostArray[z].x >0 && board[ghostArray[z].x-1] [ghostArray[z].y]!=4 && shape.j < ghostArray[z].x &&
 			!checkIfGhostInThisPosition(ghostArray[z].x-1, ghostArray[z].y)) {
-			ghostArray[z].y = ghostArray[z].x - 1;
+			ghostArray[z].x = ghostArray[z].x - 1;
 			checkPacman();
 		}
 		else
@@ -794,6 +810,7 @@ function moveGhost(ghost) {
 
 			function endGame() {
 				window.clearInterval(interval);
+				window.clearInterval(interval2);
 				song.stop();
 			}
 
@@ -889,6 +906,7 @@ function getRandomColor() {
 
 
 			function positions() {
+				moveMonster();
 				let distances=new Array();
 				let bestMove=0;
 				let dis=0;
