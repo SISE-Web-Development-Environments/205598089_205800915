@@ -348,7 +348,7 @@ function Start() {
 	pac_color = "yellow";
 	clock=new Object();
 	CreateGhostsArray();
-	//song.play();
+	song.play();
 	var cnt = 100;
 	var food_remain = setting.balls;
 	var junkfood = Math.round(food_remain * 60 / 100);
@@ -486,7 +486,7 @@ function foodchecker(val){
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0 && i<=9 && j<=9 && ((i != 9 && j != 9) && (i != 0 && j != 0) && (i != 0 && j != 9) && (i != 9 && j != 0))) {
+	while (board[i][j] != 0 && i<=9 && j<=9 ) {
 		i = Math.floor(Math.random() * 9 + 1);
 		j = Math.floor(Math.random() * 9 + 1);
 	}
@@ -713,6 +713,10 @@ function UpdateGhostPosition(){
 						score = score - 10;
 						lives--;
 						let emptyCell = findRandomEmptyCell(board);
+						while(((emptyCell[0]== 9 && emptyCell[1] == 9)|| (emptyCell[0] == 0 && emptyCell[1]== 0)
+							|| (emptyCell[0] == 0 && emptyCell[1] == 9) || (emptyCell[0] == 9 && emptyCell[1] == 0))){
+							emptyCell = findRandomEmptyCell(board);
+						}
 						shape.i = emptyCell[0];
 						shape.j = emptyCell[1];
 						board[shape.i][shape.j] = 2;
@@ -851,19 +855,10 @@ function randommateSetting(){
  setting.thirdcolor=getRandomColor();
  setting.balls=randomBallNumber();
  setting.time=randomTime();
- setting.left=RandomKeyCode();
- setting.right=RandomKeyCode();
- while(setting.left==setting.right){
-	 setting.right=RandomKeyCode();
- }
- setting.down=RandomKeyCode();
- while (setting.left == setting.down || setting.right == setting.down){
- 	setting.down=RandomKeyCode();
- }
- setting.up=RandomKeyCode();
- while (setting.up==setting.down ||setting.up==setting.left || setting.up==setting.right) {
-	 setting.up = RandomKeyCode();
- }
+ setting.left=37;
+ setting.right=39;
+ setting.down=40;
+ setting.up=38;
  UpdateStaticSetting();
 	Start();
 	showGame();
